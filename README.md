@@ -250,6 +250,10 @@ chosen, calibration, and how to customize the shopping list.
 
 ## Development
 
+Changes land on the `dev` branch first and are tried on a staging instance, which runs the
+`ghcr.io/lombarke/spoolmix:dev` image. Once they've been checked they move to `main`, which
+publishes `latest`. Use `latest` or a version tag; `dev` can be unfinished.
+
 ```bash
 git clone https://github.com/lombarke/spoolmix.git && cd spoolmix
 ```
