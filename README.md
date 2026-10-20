@@ -1,6 +1,6 @@
 # spoolmix
 
-**Plan multicolor 3D prints with the filaments you already have.**
+**Plan color-mixing 3D prints (like Snapmaker's Full Spectrum) with the filaments you already have.**
 
 Some printers can mix colors by stacking very thin layers of different filaments (for
 example the Snapmaker U1's "Full Spectrum" color mixing). That opens up thousands of
