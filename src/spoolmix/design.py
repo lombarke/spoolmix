@@ -37,8 +37,10 @@ class DesignPlan:
     def assignment(self, all_design: Sequence[DesignFilament], slots: int = 4) -> Assignment:
         slot_of = {c.key: i + 1 for i, c in enumerate(self.result.slots)}
         physical = [(to_hex(c.rgb), c.label) for c in self.result.slots]
+        materials: list[str | None] = [c.material for c in self.result.slots]
         while len(physical) < slots:
             physical.append(("#FFFFFF", "unused"))
+            materials.append(None)
         targets: dict[int, int] = {}
         rows: list[str] = []
         row_ids: dict[tuple, int] = {}
@@ -54,7 +56,7 @@ class DesignPlan:
             targets[f.id] = row_ids[key]
         for f in all_design:
             targets.setdefault(f.id, 1)  # unused design filaments
-        return Assignment(physical, targets, rows)
+        return Assignment(physical, targets, rows, materials)
 
 
 def design_weights(targets: Sequence[DesignFilament], important: set[int]) -> list[float]:

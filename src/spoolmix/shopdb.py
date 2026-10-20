@@ -265,9 +265,14 @@ def materials(cfg: Config, brand: str) -> list[str]:
 
 
 def colors(cfg: Config, brand: str, material: str) -> list[dict]:
+    """A brand's colors in this material's family: picking PLA also lists its PLA+, Matte
+    PLA, Silk PLA… (each with its own material), so a color isn't missed because the
+    database files it under a sibling material. Exact-material colors come first."""
     b, m = (brand or "").strip().lower(), (material or "").strip().lower()
+    fam = category(material)
     out = [{"id": i["id"], "name": i["name"], "hex": i["hex"], "translucent": i.get("translucent"),
-            "finish": i.get("finish"), "glow": i.get("glow")}
+            "finish": i.get("finish"), "glow": i.get("glow"), "material": i["material"]}
            for i in _pool(cfg).items
-           if (i.get("brand") or "").lower() == b and (i.get("material") or "").lower() == m and i.get("name")]
-    return sorted(out, key=lambda c: c["name"].lower())
+           if (i.get("brand") or "").lower() == b and i.get("name") and i.get("material")
+           and ((i["material"].lower() == m) or (fam and category(i["material"]) == fam))]
+    return sorted(out, key=lambda c: (c["material"].lower() != m, c["material"].lower(), c["name"].lower()))

@@ -812,7 +812,7 @@ async def calibrate_new(request: Request):
     cfg = _cfg()
     with open_inventory(cfg) as sm:
         by_id = {f.id: f for f in sm.filaments()}
-    fils = [calibrate.CalFilament(i + 1, by_id[fid].key, by_id[fid].label, by_id[fid].hex, by_id[fid].td)
+    fils = [calibrate.CalFilament(i + 1, by_id[fid].key, by_id[fid].label, by_id[fid].hex, by_id[fid].td, by_id[fid].material)
             for i, fid in enumerate(ids)]
     tpl = printers.resolve(cfg, str(form.get("template") or ""))
     if tpl is None:

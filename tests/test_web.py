@@ -381,8 +381,8 @@ def test_db_browse(local, monkeypatch):
     monkeypatch.setattr(shopdb, "ensure_fresh", lambda cfg: None)
     assert local.get("/api/db/brands").json() == [{"brand": "Elegoo", "count": 1}, {"brand": "Sunlu", "count": 3}]
     assert local.get("/api/db/materials", params={"brand": "sunlu"}).json() == ["PETG", "PLA"]
-    names = [c["name"] for c in local.get("/api/db/colors", params={"brand": "Sunlu", "material": "PLA"}).json()]
-    assert names == ["Black", "Cyan"]
+    got = [(c["material"], c["name"]) for c in local.get("/api/db/colors", params={"brand": "Sunlu", "material": "PLA"}).json()]
+    assert got == [("PLA", "Black"), ("PLA", "Cyan")]  # PETG isn't in the PLA family
 
 
 def _template_bytes(**settings):
@@ -772,3 +772,21 @@ def test_td_form_is_explained(local):
     _add(local)
     page = local.get("/filaments").text
     assert "a TD-1 meter" in page and "a HueForge test print" in page and "what's this?" in page
+
+
+
+def test_color_list_includes_the_material_family(local, monkeypatch):
+    """Picking PLA also shows the brand's PLA+ colors (Sunlu files Fuchsia under PLA+), tagged."""
+    cfg = load_config()
+    items = [{"id": "s1", "brand": "Sunlu", "material": "PLA", "name": "Red", "hex": "#CC2222"},
+             {"id": "s2", "brand": "Sunlu", "material": "PLA+", "name": "Fuchsia", "hex": "#D0208A"},
+             {"id": "s3", "brand": "Sunlu", "material": "PETG", "name": "Pink", "hex": "#F080A0"}]
+    (cfg.data_dir / shopdb.CACHE_FILE).write_text(json.dumps({"fetched": "2026-10-20", "items": items}))
+    monkeypatch.setattr(shopdb, "ensure_fresh", lambda cfg: None)
+    got = [(c["material"], c["name"]) for c in local.get("/api/db/colors", params={"brand": "Sunlu", "material": "PLA"}).json()]
+    assert got == [("PLA", "Red"), ("PLA+", "Fuchsia")]
+
+
+def test_template_card_explains_mixed_material_slots(local):
+    _tpl_upload(local, name="Mixed", filament_type=["PLA", "PLA", "PETG", "PLA"])
+    assert "set up for different materials (PLA, PETG)" in local.get("/settings").text

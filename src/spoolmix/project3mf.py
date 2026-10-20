@@ -265,6 +265,89 @@ class Assignment:
     physical: list[tuple[str, str]]  # 4 (hex, label) in slot order (F1..F4)
     targets: dict[int, int]  # design filament id -> new filament id (1..4 physical, 5.. mixed)
     mixed_rows: list[str]  # mixed_filament_definitions rows, in virtual-ID order
+    materials: list[str | None] | None = None  # material of the filament in each slot (None: unknown/unused)
+
+
+# Settings that belong to a filament preset (Snapmaker Orca's Preset.cpp
+# s_Preset_filament_options), plus the preset's identity. In a project they're lists with
+# one entry per filament slot; printer/nozzle settings (also per-slot lists on a
+# multi-toolhead printer) are deliberately not in here.
+FILAMENT_PRESET_KEYS = frozenset([
+    "filament_colour", "default_filament_colour", "filament_diameter", "pellet_flow_coefficient",
+    "filament_type", "filament_soluble", "filament_is_support", "filament_max_volumetric_speed",
+    "filament_flow_ratio", "filament_density", "filament_adhesiveness_category", "filament_cost",
+    "filament_minimal_purge_on_wipe_tower", "nozzle_temperature",
+    "nozzle_temperature_initial_layer", "cool_plate_temp", "textured_cool_plate_temp",
+    "eng_plate_temp", "hot_plate_temp", "textured_plate_temp", "cool_plate_temp_initial_layer",
+    "textured_cool_plate_temp_initial_layer", "eng_plate_temp_initial_layer",
+    "hot_plate_temp_initial_layer", "textured_plate_temp_initial_layer",
+    "supertack_plate_temp_initial_layer", "supertack_plate_temp", "graphic_effect_plate_temp",
+    "graphic_effect_plate_temp_initial_layer", "bed_type", "temperature_vitrification",
+    "filament_is_high_temperature", "reduce_fan_stop_start_freq", "dont_slow_down_outer_wall",
+    "slow_down_for_layer_cooling", "fan_min_speed", "fan_max_speed", "enable_overhang_bridge_fan",
+    "overhang_fan_speed", "overhang_fan_threshold", "close_fan_the_first_x_layers",
+    "full_fan_speed_layer", "fan_cooling_layer_time", "slow_down_layer_time", "slow_down_min_speed",
+    "filament_start_gcode", "filament_end_gcode", "activate_air_filtration",
+    "during_print_exhaust_fan_speed", "complete_print_exhaust_fan_speed",
+    "filament_retraction_length", "filament_z_hop", "filament_z_hop_types",
+    "filament_retract_lift_above", "filament_retract_lift_below", "filament_retract_lift_enforce",
+    "filament_retraction_speed", "filament_deretraction_speed", "filament_retract_restart_extra",
+    "filament_retraction_minimum_travel", "filament_retract_when_changing_layer", "filament_wipe",
+    "filament_retract_before_wipe", "filament_retract_length_toolchange",
+    "filament_retract_restart_extra_toolchange", "filament_vendor", "compatible_prints",
+    "compatible_prints_condition", "compatible_printers", "compatible_printers_condition",
+    "inherits", "filament_wipe_distance", "additional_cooling_fan_speed",
+    "nozzle_temperature_range_low", "nozzle_temperature_range_high", "enable_pressure_advance",
+    "pressure_advance", "adaptive_pressure_advance", "adaptive_pressure_advance_model",
+    "adaptive_pressure_advance_overhangs", "adaptive_pressure_advance_bridges",
+    "chamber_temperature", "filament_shrink", "filament_shrinkage_compensation_z",
+    "support_material_interface_fan_speed", "internal_bridge_fan_speed", "filament_notes",
+    "filament_seam_gap", "ironing_fan_speed", "filament_loading_speed",
+    "filament_loading_speed_start", "filament_unloading_speed", "filament_unloading_speed_start",
+    "filament_toolchange_delay", "filament_cooling_moves", "filament_stamping_loading_speed",
+    "filament_stamping_distance", "filament_cooling_initial_speed", "filament_cooling_final_speed",
+    "filament_ramming_parameters", "filament_multitool_ramming",
+    "filament_multitool_ramming_volume", "filament_multitool_ramming_flow",
+    "activate_chamber_temp_control", "filament_long_retractions_when_cut",
+    "filament_retraction_distances_when_cut", "idle_temperature", "filament_tower_ironing_area",
+    "filament_tower_interface_pre_extrusion_dist", "filament_tower_interface_pre_extrusion_length",
+    "filament_tower_interface_print_temp", "filament_flow_support",
+    "filament_settings_id", "filament_ids", "filament_vendor",
+]) - {"filament_colour", "default_filament_colour"}
+
+
+def match_presets_to_materials(settings: dict, materials: list[str | None]) -> list[str]:
+    """Give each slot the template's filament preset for the material loaded there: a PLA
+    filament in a slot the template set up for PETG gets the template's PLA preset (copied
+    from a slot that has one). Changes `settings` in place; returns what it did, in words."""
+    import copy
+
+    from spoolmix.materials import category
+
+    n = len(settings.get("filament_colour") or [])
+    types = list(settings.get("filament_type") or [])
+    if n == 0 or len(types) != n or len(materials) != n:
+        return []
+    orig = copy.deepcopy(settings)
+    notes = []
+    for i, mat in enumerate(materials):
+        want = category(mat) if mat else None
+        if not want or category(types[i]) == want:
+            continue
+        j = next((k for k in range(n) if category(types[k]) == want), None)
+        if j is None:
+            notes.append(f"slot {i + 1} holds {mat}, but the template has no {want} filament preset, so it keeps the "
+                         f"{types[i]} one (check temperatures in the slicer)")
+            continue
+        for key in FILAMENT_PRESET_KEYS:
+            v = orig.get(key)
+            if isinstance(v, list) and len(v) == n:
+                settings[key][i] = copy.deepcopy(v[j])
+        diff = orig.get("different_settings_to_system")
+        if isinstance(diff, list) and len(diff) == n + 2:  # [process, filament 1..n, printer]
+            settings["different_settings_to_system"][i + 1] = diff[j + 1]
+        notes.append(f"slot {i + 1} uses the template's {want} preset from slot {j + 1} instead of {types[i]}")
+    return notes
 
 
 def _remap_paint_stream(src, dst, mapping: dict[int, int]) -> None:
@@ -340,6 +423,9 @@ def convert(source: Path, template: Path, assign: Assignment, out: Path, progres
     if isinstance(settings.get("filament_multi_colors"), list):
         settings["filament_multi_colors"] = [h for h, _ in assign.physical]
     settings["mixed_filament_definitions"] = ";".join(assign.mixed_rows)
+    if assign.materials:
+        for note in match_presets_to_materials(settings, list(assign.materials)):
+            progress(note)
 
     skip = {"Metadata/project_settings.config", "Metadata/model_settings.config", "Metadata/filament_sequence.json",
             "Metadata/slice_info.config"}

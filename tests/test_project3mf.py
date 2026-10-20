@@ -124,3 +124,40 @@ def test_convert_refuses_slot_mismatch_with_clear_message(tmp_path):
     asg = Assignment([("#111111", "a")] * 6, {1: 1, 2: 2, 3: 3, 4: 4, 5: 5}, [])
     with pytest.raises(ValueError, match="template project has 4 filament slots, but this plan uses 6"):
         convert(src, _template(tmp_path / "t.3mf"), asg, tmp_path / "o.3mf")
+
+
+def _mixed_template(path: Path) -> Path:
+    """Like the user's: slots 1, 2, 4 set up for PLA, slot 3 for PETG."""
+    with zipfile.ZipFile(path, "w") as z:
+        z.writestr("Metadata/project_settings.config", json.dumps({
+            "filament_colour": ["#000000"] * 4, "filament_type": ["PLA", "PLA", "PETG", "PLA"],
+            "filament_settings_id": ["Sunlu PLA", "Sunlu PLA", "Overture PETG", "SnapSpeed PLA"],
+            "nozzle_temperature": ["210", "210", "240", "220"], "hot_plate_temp": ["60", "60", "75", "60"],
+            "nozzle_diameter": ["0.4", "0.4", "0.6", "0.4"],  # printer setting: must not move
+            "different_settings_to_system": ["", "a", "b", "petg-tweaks", "d", ""],
+            "print_settings_id": "0.10mm Color Mixing", "printer_settings_id": "Snapmaker U1"}))
+    return path
+
+
+def test_each_slot_gets_the_template_preset_for_its_material(tmp_path):
+    src = _project(tmp_path / "p.3mf")
+    out = tmp_path / "out.3mf"
+    asg = Assignment([("#111111", "a"), ("#222222", "b"), ("#333333", "c"), ("#444444", "d")], {1: 1, 2: 2, 3: 3, 4: 4, 5: 1},
+                     [], ["PLA", "PLA+", "PLA", "PLA"])  # a PLA filament in the template's PETG slot
+    notes: list[str] = []
+    convert(src, _mixed_template(tmp_path / "t.3mf"), asg, out, notes.append)
+    s = json.loads(zipfile.ZipFile(out).read("Metadata/project_settings.config"))
+    assert s["filament_type"] == ["PLA", "PLA", "PLA", "PLA"]
+    assert s["filament_settings_id"][2] == "Sunlu PLA" and s["nozzle_temperature"][2] == "210" and s["hot_plate_temp"][2] == "60"
+    assert s["nozzle_diameter"] == ["0.4", "0.4", "0.6", "0.4"]  # nozzle/printer settings untouched
+    assert s["different_settings_to_system"][3] == "a"
+    assert s["filament_colour"] == ["#111111", "#222222", "#333333", "#444444"]
+    assert any("slot 3 uses the template's PLA preset from slot 1" in n for n in notes)
+
+
+def test_no_matching_preset_is_reported(tmp_path):
+    from spoolmix.project3mf import match_presets_to_materials
+
+    s = {"filament_colour": ["#0"] * 2, "filament_type": ["PLA", "PLA"], "nozzle_temperature": ["210", "210"]}
+    notes = match_presets_to_materials(s, ["PETG", None])
+    assert s["filament_type"] == ["PLA", "PLA"] and "no PETG filament preset" in notes[0]

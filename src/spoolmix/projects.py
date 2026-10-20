@@ -161,7 +161,7 @@ def _plan_view(p: design.DesignPlan, all_design: list[DesignFilament], meta: dic
         "colors": colors,
         "mixes": len(asg.mixed_rows),
         "assignment": {"physical": asg.physical, "targets": {str(k): v for k, v in asg.targets.items()},
-                       "mixed_rows": asg.mixed_rows},
+                       "mixed_rows": asg.mixed_rows, "materials": asg.materials},
     }
 
 
@@ -291,7 +291,12 @@ def run_convert(cfg: Config, pid: str, which: str, progress) -> None:
     plans = meta["plans"]
     plan = plan_by_name(plans, which)
     a = plan["assignment"]
-    asg = Assignment([tuple(x) for x in a["physical"]], {int(k): v for k, v in a["targets"].items()}, a["mixed_rows"])
+    # Each slot's material, so the build can give it the template's matching preset. Plans from
+    # before this was stored fall back to the materials recorded on their slots.
+    materials = a.get("materials") or [s.get("material") for s in plan["slots"]]
+    materials = (list(materials) + [None] * len(a["physical"]))[: len(a["physical"])]
+    asg = Assignment([tuple(x) for x in a["physical"]], {int(k): v for k, v in a["targets"].items()}, a["mixed_rows"],
+                     materials)
     from spoolmix import printers
 
     tpl = printers.get(cfg, plans["opts"].get("template"))

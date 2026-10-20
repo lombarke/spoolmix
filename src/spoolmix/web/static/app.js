@@ -313,9 +313,10 @@ const SpoolMix = (() => {
       if (mats.length === 1 && !material.value) { material.value = mats[0]; loadColors(); }
     };
     // Brand/material edits fire several overlapping loads: only the latest one may update the list.
-    let colorsRequest = 0;
+    let colorsRequest = 0, loadedFor = "";
     const loadColors = async () => {
       const req = ++colorsRequest;
+      const asked = material.value.trim();
       const b = knownBrand();
       let found = [];
       if (b && material.value.trim()) {
@@ -323,6 +324,7 @@ const SpoolMix = (() => {
       }
       if (req !== colorsRequest) return;
       colors = found;
+      loadedFor = asked;
       renderColors();
     };
     const renderColors = () => {
@@ -335,10 +337,11 @@ const SpoolMix = (() => {
       const q = picked ? "" : name.value.trim().toLowerCase();
       const shown = colors.filter((c) => !q || c.name.toLowerCase().includes(q));
       box.hidden = false;
-      head.textContent = `${colors.length} ${knownBrand().brand} ${material.value} colors` + (q ? ` · ${shown.length} matching "${name.value}"` : "") + ". Click yours:";
+      const fam = new Set(colors.map((c) => c.material)).size > 1 ? " (incl. related materials, tagged)" : "";
+      head.textContent = `${colors.length} ${knownBrand().brand} ${loadedFor} colors${fam}` + (q ? ` · ${shown.length} matching "${name.value}"` : "") + ". Click yours:";
       grid.innerHTML = shown.map((c) =>
         `<button type="button" class="dbcolor${picked && picked.id === c.id ? " on" : ""}" data-id="${esc(c.id)}" title="${esc(c.hex)}">` +
-        `<span class="sw" style="background:${esc(c.hex)}"></span><span>${esc(c.name)}${c.translucent ? ' <span class="muted">· translucent</span>' : ""}${c.finish ? ` <span class="muted">· ${esc(c.finish)}</span>` : ""}${SPECKLED.test(c.name) ? ' <span class="tag tex">speckled</span>' : ""}</span></button>`).join("");
+        `<span class="sw" style="background:${esc(c.hex)}"></span><span>${esc(c.name)}${c.translucent ? ' <span class="muted">· translucent</span>' : ""}${c.finish ? ` <span class="muted">· ${esc(c.finish)}</span>` : ""}${SPECKLED.test(c.name) ? ' <span class="tag tex">speckled</span>' : ""}${c.material && c.material.toLowerCase() !== loadedFor.toLowerCase() ? ` <span class="tag">${esc(c.material)}</span>` : ""}</span></button>`).join("");
     };
     grid.addEventListener("click", (e) => {
       const btn = e.target.closest(".dbcolor");
@@ -347,6 +350,7 @@ const SpoolMix = (() => {
       if (!hit) return;
       picked = hit;
       name.value = picked.name;
+      if (picked.material) material.value = picked.material;  // e.g. PLA+ when picked from the PLA family
       setHex(picked.hex, false);
       dbid.value = picked.id;
       $("#texnote").hidden = !SPECKLED.test(picked.name);

@@ -62,6 +62,7 @@ class CalFilament:
     label: str
     hex: str
     td: float | None
+    material: str | None = None  # so the grid gets the template's preset for this material
 
 
 @dataclass
@@ -320,6 +321,12 @@ def write_3mf(run: CalRun, template: Path, n_physical: int | None = None) -> byt
     for f in run.filaments:
         colours[f.slot - 1] = to_hex(parse_hex(f.hex))
     settings["filament_colour"] = colours
+    from spoolmix.project3mf import match_presets_to_materials
+
+    materials: list[str | None] = [None] * len(colours)
+    for f in run.filaments:
+        materials[f.slot - 1] = f.material
+    match_presets_to_materials(settings, materials)  # e.g. a PLA filament in the template's PETG slot
     if isinstance(settings.get("filament_multi_colors"), list) and len(settings["filament_multi_colors"]) == len(colours):
         settings["filament_multi_colors"] = list(colours)
 

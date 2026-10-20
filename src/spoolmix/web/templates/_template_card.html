@@ -7,6 +7,12 @@
     <span class="muted">({{ template.info.filaments|map(attribute=0)|unique|join(', ') }})</span></div>
   <div>Subdivide mix layers</div><div>{{ 'on' if template.info.subdivide else 'off' }}</div>
 </div>
+{% set types = (template.info.filament_types or [])|unique|list %}
+{% if types|length > 1 %}
+<p class="muted small" style="margin:10px 0 0">Its slots are set up for different materials ({{ types|join(', ') }}). spoolmix gives each
+  filament the template's preset for its own material, so a PLA spool in the {{ types[1] if types[0] == 'PLA' else types[0] }} slot still
+  prints with PLA settings.</p>
+{% endif %}
 {% if not template.info.mixing %}
 <p class="flash err small" style="margin:10px 0 0">This project has no color-mixing settings, so it wasn't saved by a slicer that supports
   mixed filaments. Plans still work, but print-ready projects need a slicer with color mixing: save the template again from one.</p>
