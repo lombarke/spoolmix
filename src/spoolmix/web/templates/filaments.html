@@ -65,7 +65,8 @@
             <span class="tag {{ 'high' if src.kind == 'published' else 'user' if src.kind == 'yours' else '' }}">{{ src.kind or 'yours' }}</span>
           {% else %}<span class="muted">—</span>{% endif %}</td>
       <td class="small">
-        {% if src.kind == 'published' %}{% if src.url %}<a href="{{ src.url }}" target="_blank" rel="noopener">{{ src.text }}</a>{% else %}{{ src.text }}{% endif %}
+        {% if r.multicolor %}<span class="muted">Gradient/multicolor spool: its color changes along the spool, so it isn't used for mixing.</span>
+        {% elif src.kind == 'published' %}{% if src.url %}<a href="{{ src.url }}" target="_blank" rel="noopener">{{ src.text }}</a>{% else %}{{ src.text }}{% endif %}
         {% elif src.kind == 'estimate' %}<span class="muted" title="{{ src.text }}">Estimated from similar measured filaments</span>
         {% elif src.kind == 'yours' %}{{ src.text }}
         {% elif r.missing %}<span class="muted">No similar {{ f.material or '' }} filament has been measured yet.</span>
@@ -85,14 +86,7 @@
             <button class="primary">Save</button>
           </form>
           <div class="row" style="justify-content:space-between">
-            <form method="post" action="/td/set" class="tdform">
-              <input type="hidden" name="filament_id" value="{{ f.id }}">
-              <span class="small muted">Measured its TD yourself?</span>
-              <input type="number" step="0.1" min="0.1" max="100" placeholder="TD" name="td" required>
-              <select name="method"><option value="td1">TD-1</option><option value="seashell">Seashell</option><option value="other">other</option></select>
-              <label><input type="checkbox" name="add_to_db" value="true" checked> remember</label>
-              <button>Set TD</button>
-            </form>
+            {% if not r.multicolor %}{% with button="Set TD" %}{% include "_td_form.html" %}{% endwith %}{% else %}<span></span>{% endif %}
             <form method="post" action="/filaments/{{ f.id }}/delete" data-confirm="Delete {{ f.label }}?" onsubmit="return confirm(this.dataset.confirm)">
               <button class="danger">Delete filament</button>
             </form>
@@ -147,7 +141,7 @@
   </div>
   <div class="scroll">
   <table>
-    <tr><th></th><th>Filament</th><th>TD</th><th>Where it came from</th><th>Measured it yourself?</th></tr>
+    <tr><th></th><th>Filament</th><th>TD</th><th>Where it came from</th><th>Your own measurement</th></tr>
     {% for r in rows %}{% set f = r.f %}{% set src = r.source %}
     <tr>
       <td><span class="sw" style="background:#{{ f.hex or '888' }}"></span></td>
@@ -167,20 +161,15 @@
         {% elif r.missing %}<span class="muted">No similar {{ f.material or '' }} filament has been measured yet.</span>{% endif %}
       </td>
       <td>
-        <form method="post" action="/td/set" class="tdform">
-          <input type="hidden" name="filament_id" value="{{ f.id }}">
-          <input type="number" step="0.1" min="0.1" max="100" placeholder="TD" name="td" required>
-          <select name="method"><option value="td1">TD-1</option><option value="seashell">Seashell</option><option value="other">other</option></select>
-          <label><input type="checkbox" name="add_to_db" value="true" checked> remember</label>
-          <button>Set</button>
-        </form>
+        {% if not r.multicolor %}{% with button="Set" %}{% include "_td_form.html" %}{% endwith %}{% endif %}
       </td>
     </tr>
     {% endfor %}
   </table>
   </div>
-  <p class="muted small">You don't need to measure anything. If you do have a TD-1 meter (or run HueForge's Seashell test), entering your value overrides
-    published values and estimates, and "remember" reuses it for other spools of the same product.</p>
+  <p class="muted small">You don't need to measure anything: spoolmix fills in TD automatically. If you've measured a filament yourself (with a TD-1
+    meter or HueForge's test print), entering your value overrides published values and estimates, and "reuse for this filament" applies it to
+    other spools of the same product too.</p>
 </div>
 {% endif %}
 {% endblock %}

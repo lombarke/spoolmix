@@ -91,18 +91,28 @@ def test_spoolman(url: str) -> dict:
             fils = sm.filaments()
             missing = sm.missing_fields()
     except Exception as exc:
-        return {"ok": False, "url": url, "error": _friendly_error(exc)}
+        return {"ok": False, "url": url, "error": _friendly_error(exc, url)}
     return {"ok": True, "url": url, "version": info.get("version"), "filaments": len(fils),
             "in_stock": sum(1 for f in fils if f.in_stock), "needs_fields": sorted(missing)}
 
 
-def _friendly_error(exc: Exception) -> str:
-    import httpx
+SPOOLMAN_DEFAULT_PORT = 7912
 
+
+def _friendly_error(exc: Exception, url: str = "") -> str:
+    import httpx
+    from urllib.parse import urlsplit
+
+    try:
+        port = urlsplit(url).port
+    except ValueError:
+        port = None
+    hint = (f" Spoolman's default port is {SPOOLMAN_DEFAULT_PORT}; this address uses {port or 'none'}."
+            if port != SPOOLMAN_DEFAULT_PORT else "")
     if isinstance(exc, httpx.ConnectError):
-        return "Couldn't connect. Check the address and port, and that Spoolman is running."
+        return "Couldn't connect. Check the address and port, and that Spoolman is running." + hint
     if isinstance(exc, httpx.TimeoutException):
-        return "No answer from that address (timed out)."
+        return "No answer from that address (timed out)." + hint
     if isinstance(exc, httpx.HTTPStatusError):
         return f"That address answered, but not like Spoolman does (HTTP {exc.response.status_code})."
     if isinstance(exc, (ValueError, KeyError, TypeError)):

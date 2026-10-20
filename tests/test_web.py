@@ -745,3 +745,30 @@ def test_static_urls_change_when_the_files_do(local):
     assert js and css
     assert local.get(js.group(1)).status_code == 200
     assert webapp._asset_url("app.js") == js.group(1)
+
+
+def test_port_typo_hint(fresh, monkeypatch):
+    import httpx
+
+    class Down(FakeSpoolman):
+        def info(self):
+            raise httpx.ConnectError("refused")
+
+    monkeypatch.setattr(inventory, "SpoolmanClient", Down)
+    typo = fresh.post("/api/spoolman/test", data={"url": "http://spoolman.test:7192"}).json()
+    assert "default port is 7912" in typo["error"] and "uses 7192" in typo["error"]
+    right = fresh.post("/api/spoolman/test", data={"url": "http://spoolman.test:7912"}).json()
+    assert "default port" not in right["error"]  # right port, Spoolman just isn't up
+
+
+def test_gradient_spool_explained_not_looking_it_up(local):
+    _add(local, brand="Polymaker", name="Panchroma Gradient Galaxy Black-Grey", hex="#3E3F42")
+    page = local.get("/filaments").text
+    assert "Gradient/multicolor spool" in page and "Looking it up" not in page
+    assert "a TD-1 meter" not in page  # no TD form for a spool that's never used for mixing
+
+
+def test_td_form_is_explained(local):
+    _add(local)
+    page = local.get("/filaments").text
+    assert "a TD-1 meter" in page and "a HueForge test print" in page and "what's this?" in page
