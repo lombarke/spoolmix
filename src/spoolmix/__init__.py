@@ -1,4 +1,4 @@
-"""spoolmix: Plan color-mixing 3D prints (like Snapmaker's Full Spectrum) with the filaments you already have."""
+"""spoolmix: Full Spectrum isn't limited to CMY: plan color-mixing prints with the best filaments from your whole inventory."""
 
 import os
 

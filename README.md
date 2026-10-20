@@ -1,11 +1,13 @@
 # spoolmix
 
-**Plan color-mixing 3D prints (like Snapmaker's Full Spectrum) with the filaments you already have.**
+**Full Spectrum isn't limited to CMY: plan color-mixing prints with the best filaments from your whole inventory.**
 
-Some printers can mix colors by stacking very thin layers of different filaments (for
-example the Snapmaker U1's "Full Spectrum" color mixing). That opens up thousands of
-colors from a handful of spools, but working out *which* spools to load and *what ratios*
-to use is fiddly. spoolmix does it for you:
+Printers like the Snapmaker U1 mix colors by stacking very thin layers of different
+filaments ("Full Spectrum" color mixing). Most people mix only the cyan, magenta and yellow
+starter set, but the spools you already own (black, brown, gold, green…) are often a better
+base for a model's colors than any CMY mix: fewer mixes, less striping, closer colors.
+Working out *which* spools to load and *what ratios* to use across a whole inventory is
+fiddly, so spoolmix does it for you:
 
 - Drop in a multicolor 3MF (a model you designed or downloaded) and it tells you which
   filaments to load, mixes the colors you don't have, and builds a print-ready project.

@@ -19,7 +19,7 @@ from spoolmix.solver import ORCA_AUTO_MAX_PERCENT, Component, Solver, choose_pal
 from spoolmix.spoolman import Filament
 from spoolmix.tddb import TDDatabase, TDMatch
 
-app = typer.Typer(help="Plan color-mixing 3D prints (like Snapmaker's Full Spectrum) with the filaments you already have.", no_args_is_help=True)
+app = typer.Typer(help="Full Spectrum isn't limited to CMY: plan color-mixing prints with the best filaments from your whole inventory.", no_args_is_help=True)
 fields_app = typer.Typer(help="Manage the Spoolman extra fields spoolmix uses.", no_args_is_help=True)
 app.add_typer(fields_app, name="fields")
 td_app = typer.Typer(help="Look up, set and record filament TD (transmission distance).", no_args_is_help=True)
@@ -43,7 +43,7 @@ def _client():
 
 @app.callback()
 def main() -> None:
-    """Plan color-mixing 3D prints (like Snapmaker's Full Spectrum) with the filaments you already have."""
+    """Full Spectrum isn't limited to CMY: plan color-mixing prints with the best filaments from your whole inventory."""
 
 
 @app.command()

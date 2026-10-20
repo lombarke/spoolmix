@@ -21,7 +21,7 @@ COPY docker/entrypoint.sh /usr/local/bin/spoolmix-entrypoint
 RUN mkdir -p /data
 
 LABEL org.opencontainers.image.title="spoolmix" \
-      org.opencontainers.image.description="Plan color-mixing 3D prints (like Snapmaker's Full Spectrum) with the filaments you already have" \
+      org.opencontainers.image.description="Full Spectrum isn't limited to CMY: plan color-mixing prints with the best filaments from your whole inventory" \
       org.opencontainers.image.source="https://github.com/lombarke/spoolmix" \
       org.opencontainers.image.licenses="MIT"
 
