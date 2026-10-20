@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "spoolmix"
-version = "0.2.0"
+version = "0.2.1"
 description = "Full Spectrum isn't limited to CMY: plan color-mixing prints with the best filaments from your whole inventory"
 readme = "README.md"
 license = "MIT"

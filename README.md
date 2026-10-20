@@ -109,7 +109,7 @@ docker compose pull && docker compose up -d
 ```
 
 Your data in `./data` is kept. Image tags: `latest` follows the main branch; version tags
-like `0.2.0` are available for pinning.
+like `0.2.1` are available for pinning.
 
 ### Settings
 
@@ -219,6 +219,23 @@ mixes with your filaments, how they'll blend, and what to buy for a closer match
 - **Privacy:** spoolmix runs entirely on your machine. It only connects out to download
   public data: SpoolmanDB (weekly), and published TD tables from Snapmaker, Prusa and
   filamentcolors.xyz (weekly, for the brands you own). No accounts, no telemetry.
+- **There's no login.** Like Spoolman, spoolmix is meant for your home network: anyone who
+  can reach it can use it and change its settings. Don't expose it to the internet as is; if
+  you want it reachable from outside, put it behind a reverse proxy that adds authentication.
+- **"Insecure download" warnings:** browsers flag files downloaded over plain `http://`, so
+  the print-ready `.3mf` may need a click on *Keep*. That's safe on your own network. To make
+  it go away, serve spoolmix over HTTPS through a reverse proxy (Nginx Proxy Manager, Caddy,
+  Traefik…), as for any self-hosted app.
+
+## Tested with
+
+- Snapmaker U1 with Snapmaker Orca 2.4, printing PLA and PLA+ (PETG designs planned and built)
+- Spoolman 0.27, and the built-in filament list without Spoolman
+- Docker on x86-64 Linux (a Proxmox LXC), installed with Docker Compose and Dockge
+- ARM64 images (e.g. Raspberry Pi) are built and published but not yet tested on hardware
+
+Using it with another printer, slicer or material? Feedback in
+[issues](https://github.com/lombarke/spoolmix/issues) is very welcome.
 
 ## How it works
 
