@@ -1,4 +1,4 @@
-"""spoolmix: Snapmaker Full Spectrum mix recommender backed by Spoolman."""
+"""spoolmix: Plan color-mixing 3D prints (like Snapmaker's Full Spectrum) with the filaments you already have."""
 
 import os
 

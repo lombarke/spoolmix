@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "spoolmix"
 version = "0.2.0"
-description = "Plan multicolor 3D prints with filament color mixing, using the filaments you have"
+description = "Plan color-mixing 3D prints (like Snapmaker's Full Spectrum) with the filaments you already have"
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.11"
