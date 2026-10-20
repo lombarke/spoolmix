@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}spoolmix{% endblock %}</title>
+  <link rel="stylesheet" href="{{ asset('style.css') }}">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='11' cy='12' r='8' fill='%2300C3FF' opacity='.8'/><circle cx='21' cy='12' r='8' fill='%23F54399' opacity='.8'/><circle cx='16' cy='21' r='8' fill='%23FAE727' opacity='.8'/></svg>">
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="brand" href="/" style="color:inherit;text-decoration:none">
+      <svg class="logo" viewBox="0 0 32 32" aria-hidden="true"><circle cx="11" cy="12" r="8" fill="#00C3FF" opacity=".85"/><circle cx="21" cy="12" r="8" fill="#F54399" opacity=".85"/><circle cx="16" cy="21" r="8" fill="#FAE727" opacity=".85"/></svg>
+      spoolmix <span>color mixing</span></a>
+    {% if source %}<nav>
+      <a href="/" class="{{ 'active' if active == 'projects' }}">Print a design</a>
+      <a href="/match" class="{{ 'active' if active == 'match' }}">Match a color</a>
+      <a href="/filaments" class="{{ 'active' if active == 'filaments' }}">Filaments &amp; TD</a>
+      <a href="/shopping" class="{{ 'active' if active == 'shopping' }}">Shopping</a>
+      <a href="/calibrate" class="{{ 'active' if active == 'calibrate' }}">Calibrate</a>
+      <a href="/settings" class="{{ 'active' if active == 'settings' }}">Settings</a>
+    </nav>{% endif %}
+  </div>
+</header>
+<main class="wrap">
+  {% if msg %}<div class="flash">{{ msg }}</div>{% endif %}
+  {% if err %}<div class="flash err">{{ err }}</div>{% endif %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="wrap">spoolmix {{ version }} · predictions follow the slicer's color-mixing preview · layered mixing can't make true black</footer>
+<script src="{{ asset('app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

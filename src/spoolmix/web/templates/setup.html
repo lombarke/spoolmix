@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Welcome · spoolmix{% endblock %}
+{% block content %}
+<div class="setup">
+  <p class="muted small" style="margin:0 0 4px">Step 1 of 2</p>
+  <h1>Welcome to spoolmix</h1>
+  <p class="lead">spoolmix works out how to print colors with the filaments you have. First, where should it find your filaments?</p>
+  <div class="panel">
+    {% with action="/setup", submit="Continue" %}{% include "_source_form.html" %}{% endwith %}
+  </div>
+  <p class="muted small">You can change this any time under Settings.</p>
+</div>
+{% endblock %}
+{% block scripts %}<script>SpoolMix.initSource();</script>{% endblock %}

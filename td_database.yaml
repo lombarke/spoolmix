@@ -1,0 +1,2213 @@
+# spoolmix TD database. Every entry cites its source and retrieval date.
+# Regenerate published sources with scripts/build_td_database.py;
+# add your own measurements with `spoolmix td add` (kept across rebuilds).
+schema_version: 1
+updated: '2026-10-16'
+sources:
+  snapmaker-orca:
+    title: Snapmaker Orca filament color library (filaments_colours.json)
+    url: https://github.com/Snapmaker/OrcaSlicer/blob/main/resources/profiles/Snapmaker/filament/filaments_colours.json
+    description: Official Snapmaker TD values shipped with the slicer.
+  prusa-kb:
+    title: 'Prusa Knowledge Base: HueForge filament transparency values and hexcodes'
+    url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    description: Manufacturer-published HueForge TD and hex for Prusament.
+  filamentcolors:
+    title: filamentcolors.xyz swatch library
+    url: https://filamentcolors.xyz/
+    description: Community swatch library; TD measured per physical swatch (one spool, one measurement).
+  user-measured:
+    title: Your own measurements
+    url: ''
+    description: Added with `spoolmix td add` (TD-1 meter or Seashell/HueForge test print).
+entries:
+  - brand: Bambu Lab
+    material: Carbon Fiber PLA
+    color_name: Lava Gray
+    hex: '#8B9398'
+    td: 0.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-lava-gray-carbon-fiber-pla-3629/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3629
+  - brand: Bambu Lab
+    material: PETG
+    color_name: Translucent Orange
+    hex: '#EF8E5B'
+    td: 100.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-translucent-orange-petg-3917/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3917
+  - brand: Bambu Lab
+    material: PETG-HF
+    color_name: Gray
+    hex: '#A3A6A6'
+    td: 0.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-gray-petg-hf-3921/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3921
+  - brand: Bambu Lab
+    material: PETG-HF
+    color_name: Orange
+    hex: '#FF7146'
+    td: 3.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-orange-petg-hf-3912/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3912
+  - brand: Bambu Lab
+    material: PETG-HF
+    color_name: Red
+    hex: '#C33F45'
+    td: 4.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-red-petg-hf-3920/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3920
+  - brand: Bambu Lab
+    material: PETG-HF
+    color_name: White
+    hex: '#F0F1F0'
+    td: 2.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-white-petg-hf-3918/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3918
+  - brand: Bambu Lab
+    material: PLA
+    color_name: Alpine Green
+    hex: '#4D6359'
+    td: 1.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-alpine-green-pla-2818/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2818
+  - brand: Bambu Lab
+    material: PLA
+    color_name: Bronze
+    hex: '#867254'
+    td: 0.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-bronze-pla-2841/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2841
+  - brand: Bambu Lab
+    material: PLA
+    color_name: Matte Grass Green
+    hex: '#6BB173'
+    td: 0.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-matte-grass-green-pla-3915/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3915
+  - brand: Bambu Lab
+    material: PLA
+    color_name: Matte Ivory White
+    hex: '#EBEBE3'
+    td: 3.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-matte-ivory-white-pla-3916/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3916
+  - brand: Bambu Lab
+    material: PLA
+    color_name: Matte Latte Brown
+    hex: '#BF9E82'
+    td: 0.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-matte-latte-brown-pla-3909/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3909
+  - brand: Bambu Lab
+    material: PLA
+    color_name: Matte Sakura Pink
+    hex: '#EAB8CA'
+    td: 2.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-matte-sakura-pink-pla-3908/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3908
+  - brand: Bambu Lab
+    material: PLA Basic
+    color_name: Blue
+    hex: '#23529A'
+    td: 2.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-blue-pla-basic-2532/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2532
+  - brand: Bambu Lab
+    material: PLA Basic
+    color_name: Blue Grey
+    hex: '#657A89'
+    td: 1.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-blue-grey-pla-basic-2820/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2820
+  - brand: Bambu Lab
+    material: PLA Galaxy
+    color_name: Purple
+    hex: '#4C5763'
+    td: 2.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-purple-pla-galaxy-2987/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2987
+  - brand: Bambu Lab
+    material: PLA Glow
+    color_name: Pink
+    hex: '#FF9CA1'
+    td: 5.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-pink-pla-glow-2985/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2985
+  - brand: Bambu Lab
+    material: PLA Matte
+    color_name: Grass Green
+    hex: '#76B56F'
+    td: 0.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-grass-green-pla-matte-2986/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2986
+  - brand: Bambu Lab
+    material: PLA Matte
+    color_name: Mandarin Orange
+    hex: '#FC9257'
+    td: 2.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-mandarin-orange-pla-matte-3431/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3431
+  - brand: Bambu Lab
+    material: PLA Metal
+    color_name: Iridium Gold Metallic
+    hex: '#AC9E8E'
+    td: 0.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/bambu-lab-iridium-gold-metallic-pla-metal-2839/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2839
+  - brand: Elegoo
+    material: PLA
+    color_name: Clear
+    hex: '#C8C6BC'
+    td: 100.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-clear-pla-2821/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2821
+  - brand: Elegoo
+    material: PLA
+    color_name: Galaxy Black
+    hex: '#3C5E64'
+    td: 0.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-galaxy-black-pla-3403/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3403
+  - brand: Elegoo
+    material: PLA
+    color_name: Galaxy Purple
+    hex: '#436083'
+    td: 5.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-galaxy-purple-pla-3402/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3402
+  - brand: Elegoo
+    material: PLA
+    color_name: Peacock Blue
+    hex: '#236D7A'
+    td: 1.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-peacock-blue-pla-3400/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3400
+  - brand: Elegoo
+    material: PLA
+    color_name: Pink
+    hex: '#EEA2B2'
+    td: 3.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-pink-pla-4803/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4803
+  - brand: Elegoo
+    material: PLA
+    color_name: Silk Black Red
+    hex: '#665C64'
+    td: 0.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-silk-black-red-pla-3657/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3657
+  - brand: Elegoo
+    material: PLA
+    color_name: Sky Blue
+    hex: '#3DB5C5'
+    td: 2.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-sky-blue-pla-3658/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3658
+  - brand: Elegoo
+    material: PLA Pro
+    color_name: Purple
+    hex: '#5D539D'
+    td: 1.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-purple-pla-pro-2630/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2630
+  - brand: Elegoo
+    material: PLA+
+    color_name: Black
+    hex: '#424343'
+    td: 0.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-black-pla-2964/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2964
+  - brand: Elegoo
+    material: PLA+
+    color_name: Orange
+    hex: '#EB773F'
+    td: 5.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-orange-pla-3399/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3399
+  - brand: Elegoo
+    material: PLA+
+    color_name: Purple
+    hex: '#7166A9'
+    td: 2.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-purple-pla-3659/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3659
+  - brand: Elegoo
+    material: Silk PLA
+    color_name: Copper
+    hex: '#C97A63'
+    td: 0.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-copper-silk-pla-4848/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4848
+  - brand: Elegoo
+    material: Silk PLA
+    color_name: Coral Pink
+    hex: '#F07E8D'
+    td: 2.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-coral-pink-silk-pla-3404/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3404
+  - brand: Elegoo
+    material: Silk PLA
+    color_name: Gold
+    hex: '#FFC14E'
+    td: 2.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-gold-silk-pla-3396/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3396
+  - brand: Elegoo
+    material: Silk PLA
+    color_name: Red/Green
+    hex: '#996E6B'
+    td: 0.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-redgreen-silk-pla-3398/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3398
+  - brand: Elegoo
+    material: Silk PLA
+    color_name: Silver
+    hex: '#A4ABB2'
+    td: 0.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/elegoo-silver-silk-pla-3401/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3401
+  - brand: eSUN
+    material: ABS+
+    color_name: Natural
+    hex: '#E4DEC9'
+    td: 8.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-natural-abs-4515/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4515
+  - brand: eSUN
+    material: ABS+
+    color_name: Silver
+    hex: '#7F807E'
+    td: 0.3
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-silver-abs-4508/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4508
+  - brand: eSUN
+    material: PETG
+    color_name: Semi-Transparent Magenta
+    hex: '#B8364A'
+    td: 32.3
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-semi-transparent-magenta-petg-4847/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4847
+  - brand: eSUN
+    material: PETG
+    color_name: Solid White
+    hex: '#F4F1F1'
+    td: 5.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-solid-white-petg-3652/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3652
+  - brand: eSUN
+    material: PETG
+    color_name: White
+    hex: '#E7EDED'
+    td: 4.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-white-petg-1345/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 1345
+  - brand: eSUN
+    material: PETG-HS
+    color_name: Black
+    hex: '#424445'
+    td: 0.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-black-petg-hs-3664/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3664
+  - brand: eSUN
+    material: PETG-HS
+    color_name: Solid Blue
+    hex: '#1A6FB4'
+    td: 1.3
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-solid-blue-petg-hs-3661/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3661
+  - brand: eSUN
+    material: PLA
+    color_name: eStars Luminous Shiny Galaxy Black
+    hex: '#403936'
+    td: 8.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-estars-luminous-shiny-galaxy-black-pla-2843/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2843
+  - brand: eSUN
+    material: PLA
+    color_name: Glow in the Dark (Green)
+    hex: '#C5C2AB'
+    td: 12.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-glow-in-the-dark-green-pla-3460/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3460
+  - brand: eSUN
+    material: PLA
+    color_name: Natural Wood
+    hex: '#EBCFA6'
+    td: 3.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-natural-wood-pla-3647/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3647
+  - brand: eSUN
+    material: PLA
+    color_name: UV Change (Purple)
+    hex: '#CABBA9'
+    td: 15.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-uv-change-purple-pla-3459/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3459
+  - brand: eSUN
+    material: PLA Metal
+    color_name: Bronze
+    hex: '#917F57'
+    td: 0.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-bronze-pla-metal-3461/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3461
+  - brand: eSUN
+    material: PLA+
+    color_name: Beige
+    hex: '#ECCAB0'
+    td: 3.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-beige-pla-3939/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3939
+  - brand: eSUN
+    material: PLA+
+    color_name: Blue
+    hex: '#054795'
+    td: 1.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-blue-pla-3388/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3388
+  - brand: eSUN
+    material: PLA+
+    color_name: White
+    hex: '#E1E9E9'
+    td: 7.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/esun-white-pla-3662/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3662
+  - brand: Overture
+    material: ABS
+    color_name: Diamond Gray
+    hex: '#5D5F5F'
+    td: 0.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-diamond-gray-abs-4510/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4510
+  - brand: Overture
+    material: ABS
+    color_name: Diamond Purple
+    hex: '#6B649D'
+    td: 1.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-diamond-purple-abs-4509/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4509
+  - brand: Overture
+    material: Carbon Fiber PLA
+    color_name: Midnight Black
+    hex: '#454646'
+    td: 0.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-midnight-black-carbon-fiber-pla-3055/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3055
+  - brand: Overture
+    material: Glow PLA
+    color_name: Glow Blue
+    hex: '#4EA2AA'
+    td: 9.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-glow-blue-glow-pla-3102/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3102
+  - brand: Overture
+    material: Glow PLA
+    color_name: Glow Orange
+    hex: '#C2895E'
+    td: 11.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-glow-orange-glow-pla-3103/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3103
+  - brand: Overture
+    material: Glow PLA
+    color_name: Glow Red
+    hex: '#C27B7D'
+    td: 12.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-glow-red-glow-pla-3101/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3101
+  - brand: Overture
+    material: Glow PLA
+    color_name: Glow Yellow
+    hex: '#E3F079'
+    td: 13.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-glow-yellow-glow-pla-3115/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3115
+  - brand: Overture
+    material: PLA
+    color_name: Blue
+    hex: '#034070'
+    td: 1.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-blue-pla-2397/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2397
+  - brand: Overture
+    material: PLA
+    color_name: Cement Gray
+    hex: '#48494A'
+    td: 0.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-cement-gray-pla-3112/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3112
+  - brand: Overture
+    material: PLA
+    color_name: Fresh Red
+    hex: '#C01F1D'
+    td: 1.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-fresh-red-pla-3109/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3109
+  - brand: Overture
+    material: PLA
+    color_name: Gray Blue
+    hex: '#6D8790'
+    td: 0.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-gray-blue-pla-3110/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3110
+  - brand: Overture
+    material: PLA
+    color_name: Green
+    hex: '#318C49'
+    td: 1.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-green-pla-3097/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3097
+  - brand: Overture
+    material: PLA
+    color_name: Highlight Yellow
+    hex: '#FBF93C'
+    td: 5.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-highlight-yellow-pla-3116/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3116
+  - brand: Overture
+    material: PLA
+    color_name: Light Blue
+    hex: '#7CC4D5'
+    td: 3.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-light-blue-pla-3099/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3099
+  - brand: Overture
+    material: PLA
+    color_name: Light Gray
+    hex: '#8F9694'
+    td: 0.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-light-gray-pla-3114/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3114
+  - brand: Overture
+    material: PLA
+    color_name: Matte Black
+    hex: '#302E2E'
+    td: 0.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-matte-black-pla-2666/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2666
+  - brand: Overture
+    material: PLA
+    color_name: Matte Light Green
+    hex: '#A1C1A5'
+    td: 0.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-matte-light-green-pla-2660/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2660
+  - brand: Overture
+    material: PLA
+    color_name: Matte Olive Green
+    hex: '#B59837'
+    td: 0.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-matte-olive-green-pla-2661/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2661
+  - brand: Overture
+    material: PLA
+    color_name: Matte Orange
+    hex: '#F59752'
+    td: 2.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-matte-orange-pla-2667/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2667
+  - brand: Overture
+    material: PLA
+    color_name: Matte Purple
+    hex: '#978DC5'
+    td: 0.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-matte-purple-pla-2383/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2383
+  - brand: Overture
+    material: PLA
+    color_name: Matte White
+    hex: '#E1E4DD'
+    td: 3.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-matte-white-pla-2669/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2669
+  - brand: Overture
+    material: PLA
+    color_name: Matte Yellow
+    hex: '#FFD359'
+    td: 3.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-matte-yellow-pla-2496/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2496
+  - brand: Overture
+    material: PLA
+    color_name: Olive Green
+    hex: '#8F843D'
+    td: 0.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-olive-green-pla-3108/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3108
+  - brand: Overture
+    material: PLA
+    color_name: Pink
+    hex: '#DC99B4'
+    td: 2.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-pink-pla-3113/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3113
+  - brand: Overture
+    material: PLA
+    color_name: Red
+    hex: '#C9341A'
+    td: 4.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-red-pla-2849/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2849
+  - brand: Overture
+    material: PLA
+    color_name: Royal Gold
+    hex: '#C58F31'
+    td: 2.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-royal-gold-pla-2847/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2847
+  - brand: Overture
+    material: PLA
+    color_name: Shimmer Silver Green
+    hex: '#7F826A'
+    td: 4.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-shimmer-silver-green-pla-3107/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3107
+  - brand: Overture
+    material: PLA
+    color_name: Silk Silver
+    hex: '#959C98'
+    td: 1.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-silk-silver-pla-2673/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2673
+  - brand: Overture
+    material: PLA Matte
+    color_name: Blue
+    hex: '#277EAB'
+    td: 0.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-blue-pla-matte-3493/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3493
+  - brand: Overture
+    material: PLA Matte
+    color_name: Brick Red
+    hex: '#AE4848'
+    td: 0.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-brick-red-pla-matte-3494/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3494
+  - brand: Overture
+    material: PLA Matte
+    color_name: Green
+    hex: '#5EAE73'
+    td: 0.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-green-pla-matte-3492/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3492
+  - brand: Overture
+    material: PLA Matte
+    color_name: Pink
+    hex: '#EBBDCE'
+    td: 2.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-pink-pla-matte-3491/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3491
+  - brand: Overture
+    material: PLA Pro
+    color_name: Digital Blue
+    hex: '#008FBE'
+    td: 4.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-digital-blue-pla-pro-2400/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2400
+  - brand: Overture
+    material: PLA Pro
+    color_name: Light Blue
+    hex: '#68C8DB'
+    td: 3.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-light-blue-pla-pro-2399/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2399
+  - brand: Overture
+    material: Silk PLA
+    color_name: Gold
+    hex: '#CA9B52'
+    td: 2.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-gold-silk-pla-3118/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3118
+  - brand: Overture
+    material: Silk PLA
+    color_name: Neon Green
+    hex: '#C2D74D'
+    td: 2.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-neon-green-silk-pla-4512/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4512
+  - brand: Overture
+    material: Silk PLA
+    color_name: Silk Copper
+    hex: '#B27052'
+    td: 0.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/overture-silk-copper-silk-pla-3000/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3000
+  - brand: Polymaker
+    material: Panchroma
+    color_name: Gold
+    hex: '#B8813C'
+    td: 2.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-gold-panchroma-4120/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4120
+  - brand: Polymaker
+    material: Panchroma Celestial
+    color_name: Blue
+    hex: '#5BC0C9'
+    td: 6.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-blue-panchroma-celestial-4318/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4318
+  - brand: Polymaker
+    material: Panchroma Celestial
+    color_name: Green
+    hex: '#87D1BA'
+    td: 7.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-green-panchroma-celestial-4409/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4409
+  - brand: Polymaker
+    material: Panchroma Celestial
+    color_name: Purple
+    hex: '#888CB8'
+    td: 5.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-purple-panchroma-celestial-4319/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4319
+  - brand: Polymaker
+    material: Panchroma Galaxy
+    color_name: Dark Green
+    hex: '#31524B'
+    td: 0.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-dark-green-panchroma-galaxy-4321/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4321
+  - brand: Polymaker
+    material: Panchroma Galaxy
+    color_name: Dark Grey
+    hex: '#585A5C'
+    td: 0.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-dark-grey-panchroma-galaxy-4411/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4411
+  - brand: Polymaker
+    material: Panchroma Galaxy
+    color_name: Dark Red
+    hex: '#5F4843'
+    td: 0.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-dark-red-panchroma-galaxy-4410/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4410
+  - brand: Polymaker
+    material: Panchroma Luminous
+    color_name: Orange
+    hex: '#FF935F'
+    td: 9.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-orange-panchroma-luminous-4408/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4408
+  - brand: Polymaker
+    material: Panchroma Luminous
+    color_name: Pink
+    hex: '#F97F7A'
+    td: 9.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-pink-panchroma-luminous-4324/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4324
+  - brand: Polymaker
+    material: Panchroma Luminous
+    color_name: Yellow
+    hex: '#E1D758'
+    td: 10.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-yellow-panchroma-luminous-4406/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4406
+  - brand: Polymaker
+    material: Panchroma Marble
+    color_name: Brick
+    hex: '#C36851'
+    td: 0.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-brick-panchroma-marble-4413/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4413
+  - brand: Polymaker
+    material: Panchroma Matte
+    color_name: Lotus Pink
+    hex: '#C96D9F'
+    td: 2.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-lotus-pink-panchroma-matte-3495/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3495
+  - brand: Polymaker
+    material: Panchroma Metallic
+    color_name: Bronze
+    hex: '#825646'
+    td: 0.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-bronze-panchroma-metallic-4415/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4415
+  - brand: Polymaker
+    material: Panchroma Metallic
+    color_name: Silver
+    hex: '#9FA5A8'
+    td: 0.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-silver-panchroma-metallic-4414/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4414
+  - brand: Polymaker
+    material: Panchroma Starlight
+    color_name: Aurora
+    hex: '#7A7F69'
+    td: 1.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-aurora-panchroma-starlight-4776/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4776
+  - brand: Polymaker
+    material: Panchroma Starlight
+    color_name: Jupiter
+    hex: '#926C4E'
+    td: 3.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-jupiter-panchroma-starlight-4323/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4323
+  - brand: Polymaker
+    material: Panchroma Starlight
+    color_name: Mars
+    hex: '#9B4852'
+    td: 2.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-mars-panchroma-starlight-4777/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4777
+  - brand: Polymaker
+    material: Panchroma Starlight
+    color_name: Nebula
+    hex: '#76647B'
+    td: 1.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-nebula-panchroma-starlight-4320/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4320
+  - brand: Polymaker
+    material: Panchroma Starlight
+    color_name: Twilight
+    hex: '#4F7481'
+    td: 2.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-twilight-panchroma-starlight-4412/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4412
+  - brand: Polymaker
+    material: PolyFlex TPU90
+    color_name: Polymaker Teal
+    hex: '#4CB6AE'
+    td: 0.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-polymaker-teal-polyflex-tpu90-4405/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4405
+  - brand: Polymaker
+    material: PolyLite PLA
+    color_name: Aqua Blue
+    hex: '#6EC9D8'
+    td: 4.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-aqua-blue-polylite-pla-2407/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2407
+  - brand: Polymaker
+    material: PolyLite PLA
+    color_name: Azure Blue
+    hex: '#005C9C'
+    td: 2.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-azure-blue-polylite-pla-2410/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2410
+  - brand: Polymaker
+    material: PolyLite PLA
+    color_name: Grey
+    hex: '#8D9497'
+    td: 0.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-grey-polylite-pla-2406/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2406
+  - brand: Polymaker
+    material: PolyLite PLA
+    color_name: Lemon Yellow
+    hex: '#F1E049'
+    td: 5.3
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-lemon-yellow-polylite-pla-2408/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2408
+  - brand: Polymaker
+    material: PolyLite PLA
+    color_name: Metallic Chrome
+    hex: '#5D6570'
+    td: 0.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-metallic-chrome-polylite-pla-3056/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3056
+  - brand: Polymaker
+    material: PolyLite PLA
+    color_name: Natural
+    hex: '#C9C5B7'
+    td: 29.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-natural-polylite-pla-2415/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2415
+  - brand: Polymaker
+    material: PolyLite PLA
+    color_name: Silk Orange
+    hex: '#F66A3E'
+    td: 3.3
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-silk-orange-polylite-pla-3445/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3445
+  - brand: Polymaker
+    material: PolyLite PLA
+    color_name: Starlight Comet
+    hex: '#587A68'
+    td: 2.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-starlight-comet-polylite-pla-3496/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3496
+  - brand: Polymaker
+    material: PolyLite PLA
+    color_name: Yellow Pro
+    hex: '#FFB807'
+    td: 8.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-yellow-pro-polylite-pla-3446/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3446
+  - brand: Polymaker
+    material: PolyLite Pro
+    color_name: Green
+    hex: '#42985F'
+    td: 1.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-green-polylite-pro-3948/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3948
+  - brand: Polymaker
+    material: PolyLite Pro
+    color_name: Yellow
+    hex: '#EDA715'
+    td: 8.3
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-yellow-polylite-pro-3947/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3947
+  - brand: Polymaker
+    material: PolyMax PLA
+    color_name: Purple
+    hex: '#6B61A5'
+    td: 0.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/polymaker-purple-polymax-pla-2611/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2611
+  - brand: Sunlu
+    material: ABS
+    color_name: Black
+    hex: '#404142'
+    td: 0.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-black-abs-2614/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2614
+  - brand: Sunlu
+    material: Glow PLA
+    color_name: Red
+    hex: '#F25455'
+    td: 8.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-red-glow-pla-3503/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3503
+  - brand: Sunlu
+    material: High Speed PLA
+    color_name: Brick Red Marble
+    hex: '#8A463E'
+    td: 1.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-brick-red-marble-high-speed-pla-4797/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4797
+  - brand: Sunlu
+    material: High Speed PLA
+    color_name: Chestnut Brown Marble
+    hex: '#DED7D0'
+    td: 2.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-chestnut-brown-marble-high-speed-pla-4795/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4795
+  - brand: Sunlu
+    material: High Speed PLA
+    color_name: Forest Green Marble
+    hex: '#CCD5D3'
+    td: 0.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-forest-green-marble-high-speed-pla-4794/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4794
+  - brand: Sunlu
+    material: High Speed PLA
+    color_name: Grey
+    hex: '#64686C'
+    td: 0.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-grey-high-speed-pla-2758/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2758
+  - brand: Sunlu
+    material: High Speed PLA
+    color_name: Oreo Marble
+    hex: '#D8DCDD'
+    td: 1.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-oreo-marble-high-speed-pla-4796/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4796
+  - brand: Sunlu
+    material: High Speed PLA
+    color_name: Pink
+    hex: '#E683A7'
+    td: 4.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-pink-high-speed-pla-2952/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2952
+  - brand: Sunlu
+    material: Matte PLA
+    color_name: Sunny Orange
+    hex: '#FF9658'
+    td: 2.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-sunny-orange-matte-pla-4811/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4811
+  - brand: Sunlu
+    material: PETG
+    color_name: Olive Green
+    hex: '#707D63'
+    td: 0.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-olive-green-petg-4600/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4600
+  - brand: Sunlu
+    material: PETG
+    color_name: Transparent
+    hex: '#BAB9B4'
+    td: 100.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-transparent-petg-2751/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2751
+  - brand: Sunlu
+    material: PETG
+    color_name: White
+    hex: '#DBDDD9'
+    td: 7.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-white-petg-3067/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3067
+  - brand: Sunlu
+    material: PLA
+    color_name: Black
+    hex: '#3C3C3C'
+    td: 0.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-black-pla-2756/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2756
+  - brand: Sunlu
+    material: PLA
+    color_name: Blue
+    hex: '#006AB8'
+    td: 3.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-blue-pla-3327/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3327
+  - brand: Sunlu
+    material: PLA
+    color_name: Cherry Red
+    hex: '#EA4A5D'
+    td: 5.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-cherry-red-pla-3148/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3148
+  - brand: Sunlu
+    material: PLA
+    color_name: Glow in the Dark
+    hex: '#CBCAB8'
+    td: 11.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-glow-in-the-dark-pla-2754/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2754
+  - brand: Sunlu
+    material: PLA
+    color_name: Green Mint
+    hex: '#4CCB9A'
+    td: 3.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-green-mint-pla-2953/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2953
+  - brand: Sunlu
+    material: PLA
+    color_name: Grey
+    hex: '#6B6E6E'
+    td: 1.3
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-grey-pla-2957/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2957
+  - brand: Sunlu
+    material: PLA
+    color_name: Orange
+    hex: '#E77932'
+    td: 6.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-orange-pla-2954/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2954
+  - brand: Sunlu
+    material: PLA
+    color_name: Red
+    hex: '#AC3637'
+    td: 5.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-red-pla-2938/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2938
+  - brand: Sunlu
+    material: PLA
+    color_name: Silk Black
+    hex: '#737272'
+    td: 0.3
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-silk-black-pla-2996/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2996
+  - brand: Sunlu
+    material: PLA
+    color_name: Silk Red
+    hex: '#CD5C62'
+    td: 2.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-silk-red-pla-2997/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2997
+  - brand: Sunlu
+    material: PLA
+    color_name: Sky Blue
+    hex: '#0CB7CC'
+    td: 4.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-sky-blue-pla-3146/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3146
+  - brand: Sunlu
+    material: PLA
+    color_name: Sunny Orange
+    hex: '#FF7235'
+    td: 7.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-sunny-orange-pla-3147/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3147
+  - brand: Sunlu
+    material: PLA
+    color_name: Transparent
+    hex: '#C8C7BF'
+    td: 100.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-transparent-pla-3387/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3387
+  - brand: Sunlu
+    material: PLA
+    color_name: Transparent Orange
+    hex: '#DB7F42'
+    td: 100.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-transparent-orange-pla-3328/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3328
+  - brand: Sunlu
+    material: PLA
+    color_name: White
+    hex: '#DEDFD9'
+    td: 7.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-white-pla-2955/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2955
+  - brand: Sunlu
+    material: PLA Galaxy
+    color_name: Galaxy Green
+    hex: '#3E6556'
+    td: 0.3
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-galaxy-green-pla-galaxy-4853/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4853
+  - brand: Sunlu
+    material: PLA Galaxy
+    color_name: Star Brown
+    hex: '#735C5B'
+    td: 0.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-star-brown-pla-galaxy-4854/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4854
+  - brand: Sunlu
+    material: PLA Matte
+    color_name: Black
+    hex: '#454546'
+    td: 0.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-black-pla-matte-2940/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2940
+  - brand: Sunlu
+    material: PLA Matte
+    color_name: Olive Green
+    hex: '#7A8B60'
+    td: 0.3
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-olive-green-pla-matte-4807/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4807
+  - brand: Sunlu
+    material: PLA Meta
+    color_name: Blue
+    hex: '#00B2CC'
+    td: 3.4
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-blue-pla-meta-2757/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2757
+  - brand: Sunlu
+    material: PLA Meta
+    color_name: Mint Green
+    hex: '#03A490'
+    td: 3.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-mint-green-pla-meta-3586/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3586
+  - brand: Sunlu
+    material: PLA Meta
+    color_name: Sakura Pink
+    hex: '#F5B5C2'
+    td: 5.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-sakura-pink-pla-meta-3587/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3587
+  - brand: Sunlu
+    material: PLA Meta
+    color_name: Taro Purple
+    hex: '#A69ED0'
+    td: 3.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-taro-purple-pla-meta-3149/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3149
+  - brand: Sunlu
+    material: PLA+
+    color_name: Beige
+    hex: '#DDBCAC'
+    td: 6.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-beige-pla-4330/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4330
+  - brand: Sunlu
+    material: PLA+
+    color_name: Green
+    hex: '#4EE349'
+    td: 5.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-green-pla-2622/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2622
+  - brand: Sunlu
+    material: PLA+
+    color_name: Klein Blue
+    hex: '#264E9E'
+    td: 3.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-klein-blue-pla-4830/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4830
+  - brand: Sunlu
+    material: PLA+
+    color_name: Orange
+    hex: '#ED7432'
+    td: 5.8
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-orange-pla-2950/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2950
+  - brand: Sunlu
+    material: PLA+
+    color_name: Pure Yellow
+    hex: '#FFBD2C'
+    td: 4.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-pure-yellow-pla-2951/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2951
+  - brand: Sunlu
+    material: PLA+
+    color_name: Purple
+    hex: '#8887C5'
+    td: 4.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-purple-pla-2759/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2759
+  - brand: Sunlu
+    material: PLA+
+    color_name: Silk Blue
+    hex: '#33ACD4'
+    td: 1.0
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-silk-blue-pla-3003/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 3003
+  - brand: Sunlu
+    material: PLA+
+    color_name: Silk Brass
+    hex: '#F1A050'
+    td: 2.5
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-silk-brass-pla-2992/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2992
+  - brand: Sunlu
+    material: PLA+
+    color_name: Silk Pink
+    hex: '#FFCAD9'
+    td: 2.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-silk-pink-pla-2995/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2995
+  - brand: Sunlu
+    material: PLA+
+    color_name: Silk White
+    hex: '#EEEFE7'
+    td: 3.2
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-silk-white-pla-2993/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2993
+  - brand: Sunlu
+    material: PLA+
+    color_name: Skin
+    hex: '#F7BEA1'
+    td: 5.6
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-skin-pla-2994/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2994
+  - brand: Sunlu
+    material: Silk PLA+
+    color_name: Pink Gold Dual Color
+    hex: '#F79F4B'
+    td: 2.9
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-pink-gold-dual-color-silk-pla-4798/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 4798
+  - brand: Sunlu
+    material: Silk PLA+
+    color_name: Red Copper
+    hex: '#CC937F'
+    td: 1.7
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-red-copper-silk-pla-2755/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2755
+  - brand: Sunlu
+    material: TPU / TPE
+    color_name: Black
+    hex: '#414142'
+    td: 0.1
+    source: filamentcolors
+    source_url: https://filamentcolors.xyz/swatch/sunlu-black-tpu-tpe-2753/
+    source_date: '2026-10-16'
+    notes: filamentcolors swatch 2753
+  - brand: Prusament
+    material: ASA
+    color_name: Jet Black
+    hex: '#292824'
+    td: 0.4
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: ASA
+    color_name: Lipstick Red
+    hex: '#D03036'
+    td: 2.0
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: ASA
+    color_name: Natural
+    hex: '#D6D6CB'
+    td: 6.5
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: ASA
+    color_name: Prusa Galaxy Black
+    hex: '#3E413E'
+    td: 0.1
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: ASA
+    color_name: Prusa Orange
+    hex: '#F55927'
+    td: 4.4
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: ASA
+    color_name: Sapphire Blue
+    hex: '#3B4467'
+    td: 0.3
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: ASA
+    color_name: Signal White
+    hex: '#E3DFD7'
+    td: 2.4
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PA11 CF
+    color_name: PA11 Carbon Fiber Black
+    hex: '#0D250D'
+    td: 0.1
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PC
+    color_name: Blend Jet Black
+    hex: '#24292A'
+    td: 0.4
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PC
+    color_name: Blend Natural
+    hex: '#DFDFD1'
+    td: 11.3
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PC
+    color_name: Blend Prusa Orange
+    hex: '#EA5E19'
+    td: 6.4
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PC
+    color_name: Blend Prusa Pro Green
+    hex: '#5AECCB'
+    td: 1.6
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PC
+    color_name: Blend Urban Grey
+    hex: '#999595'
+    td: 0.5
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PC CF
+    color_name: PC Carbon Fiber Black
+    hex: '#262727'
+    td: 0.1
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PEI 1010
+    color_name: Natural
+    hex: '#FFFFFF'
+    td: 100.0
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+    notes: hex marked * on source page
+  - brand: Prusament
+    material: PETG
+    color_name: Anthracite Grey
+    hex: '#3F4646'
+    td: 0.3
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Carmine Red Transparent
+    hex: '#B5422F'
+    td: 6.2
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Chalky Blue
+    hex: '#6F9AA9'
+    td: 0.6
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Clear
+    hex: '#E4E7E3'
+    td: 100.0
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Jet Black
+    hex: '#292B2B'
+    td: 0.3
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Jungle Green
+    hex: '#007248'
+    td: 0.5
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Lipstick Red
+    hex: '#BB2E32'
+    td: 2.6
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Mango Yellow
+    hex: '#F2B706'
+    td: 2.6
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Matte Black
+    hex: '#303635'
+    td: 0.3
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Neon Green Transparent
+    hex: '#A6EC5E'
+    td: 75.0
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Ocean Blue
+    hex: '#1A4C54'
+    td: 3.0
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Pistachio Green
+    hex: '#93A682'
+    td: 0.9
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Prusa Galaxy Black
+    hex: '#494546'
+    td: 0.2
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Prusa Orange
+    hex: '#EB5403'
+    td: 6.2
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Prusa Orange Transparent
+    hex: '#F17230'
+    td: 44.2
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Recycled
+    hex: '#0D210C'
+    td: 0.4
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+    notes: Inconsistent color; hex marked * on source page
+  - brand: Prusament
+    material: PETG
+    color_name: Signal White
+    hex: '#E5E0E1'
+    td: 3.4
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Terracotta Light
+    hex: '#B87F69'
+    td: 1.5
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Ultramarine Blue Transparent
+    hex: '#2B3B60'
+    td: 8.0
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Urban Grey
+    hex: '#95908C'
+    td: 0.5
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG
+    color_name: Yellow Gold
+    hex: '#9A8523'
+    td: 9.2
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG Special
+    color_name: PETG Carbon Fiber Black
+    hex: '#3B3539'
+    td: 0.3
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG Special
+    color_name: PETG Tungsten 75%
+    hex: '#545251'
+    td: 0.3
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG Special
+    color_name: PETG V0 Jet Black
+    hex: '#363331'
+    td: 0.3
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PETG Special
+    color_name: PETG V0 Natural
+    hex: '#DEE2D8'
+    td: 10.4
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Army Green
+    hex: '#5E6344'
+    td: 0.4
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Azure Blue
+    hex: '#0682AC'
+    td: 6.6
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Blend Lime Green
+    hex: '#A7B852'
+    td: 3.5
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Blend Ms. Pink
+    hex: '#E34A93'
+    td: 4.1
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Blend My Silverness
+    hex: '#AEB8C0'
+    td: 1.0
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Blend Oh My Gold
+    hex: '#CE9F2D'
+    td: 4.1
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Blend Pearl White
+    hex: '#D0D7D6'
+    td: 5.4
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Blend Royal Blue
+    hex: '#04518E'
+    td: 0.8
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Blend Viva La Bronze
+    hex: '#B38E3E'
+    td: 1.9
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Galaxy Green
+    hex: '#426639'
+    td: 3.2
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Galaxy Purple
+    hex: '#0F0939'
+    td: 4.7
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Galaxy Silver
+    hex: '#999A9F'
+    td: 6.4
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Gentleman's Grey
+    hex: '#354046'
+    td: 0.3
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Gravity Grey
+    hex: '#9FA4A7'
+    td: 0.7
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Jet Black
+    hex: '#24292A'
+    td: 0.3
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Lipstick Red
+    hex: '#D03036'
+    td: 3.3
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Marble Grey
+    hex: '#B0B4B4'
+    td: 3.5
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Opal Green
+    hex: '#075B49'
+    td: 4.0
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Pearl Mouse
+    hex: '#A49D8D'
+    td: 2.3
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Pineapple Yellow
+    hex: '#EFD006'
+    td: 7.6
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Premium Mystic Brown
+    hex: '#482E31'
+    td: 1.8
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Premium Mystic Green
+    hex: '#555845'
+    td: 1.0
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Pristine White
+    hex: '#E6EAED'
+    td: 5.1
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Prusa Galaxy Black
+    hex: '#3D3E3C'
+    td: 0.2
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Prusa Orange
+    hex: '#FE6E31'
+    td: 6.6
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Recycled
+    hex: '#0D210C'
+    td: 0.4
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+    notes: Inconsistent color; hex marked * on source page
+  - brand: Prusament
+    material: PLA
+    color_name: Simply Green
+    hex: '#70A640'
+    td: 3.0
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PLA
+    color_name: Vanilla White
+    hex: '#D9D4C4'
+    td: 7.1
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PVB
+    color_name: Bright Green Transparent
+    hex: '#96D35F'
+    td: 49.2
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PVB
+    color_name: Dark Blue Transparent
+    hex: '#0A4DA5'
+    td: 7.6
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PVB
+    color_name: Light Yellow Transparent
+    hex: '#FFFFEC'
+    td: 34.6
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+    notes: hex marked * on source page
+  - brand: Prusament
+    material: PVB
+    color_name: Natural Transparent
+    hex: '#DFDFD3'
+    td: 100.0
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: PVB
+    color_name: Prusa Orange Transparent
+    hex: '#FFF38A'
+    td: 34.7
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+    notes: hex marked * on source page
+  - brand: Prusament
+    material: PVB
+    color_name: Smoky Black Transparent
+    hex: '#ADADAD'
+    td: 18.0
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+  - brand: Prusament
+    material: rPLA
+    color_name: Algae Pigment
+    hex: '#674B41'
+    td: 4.2
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+    notes: Inconsistent color
+  - brand: Prusament
+    material: rPLA
+    color_name: Corn Pigment
+    hex: '#B37B46'
+    td: 6.2
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+    notes: Inconsistent color
+  - brand: Prusament
+    material: rPLA
+    color_name: Risotto Pigment
+    hex: '#CCC9BF'
+    td: 11.0
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+    notes: Inconsistent color
+  - brand: Prusament
+    material: rPLA
+    color_name: Wine Pigment
+    hex: '#5E493F'
+    td: 2.8
+    source: prusa-kb
+    source_url: https://help.prusa3d.com/article/hueforge-filament-transparency-values-and-hexcodes_762314
+    source_date: '2026-10-16'
+    notes: Inconsistent color
+  - brand: Snapmaker
+    material: PLA Full Spectrum
+    color_name: Semi-Translucent Cyan
+    hex: '#00C3FF'
+    td: 5.5
+    source: snapmaker-orca
+    source_url: https://github.com/Snapmaker/OrcaSlicer/blob/89311782298309040ee28b9a183f33f0f5477b15/resources/profiles/Snapmaker/filament/filaments_colours.json
+    source_date: '2026-10-16'
+    notes: SKU 34267
+  - brand: Snapmaker
+    material: PLA Full Spectrum
+    color_name: Semi-Translucent Gray
+    hex: '#9199A4'
+    td: 8.8
+    source: snapmaker-orca
+    source_url: https://github.com/Snapmaker/OrcaSlicer/blob/89311782298309040ee28b9a183f33f0f5477b15/resources/profiles/Snapmaker/filament/filaments_colours.json
+    source_date: '2026-10-16'
+    notes: SKU 34265
+  - brand: Snapmaker
+    material: PLA Full Spectrum
+    color_name: Semi-Translucent Magenta
+    hex: '#F54399'
+    td: 5.5
+    source: snapmaker-orca
+    source_url: https://github.com/Snapmaker/OrcaSlicer/blob/89311782298309040ee28b9a183f33f0f5477b15/resources/profiles/Snapmaker/filament/filaments_colours.json
+    source_date: '2026-10-16'
+    notes: SKU 34268
+  - brand: Snapmaker
+    material: PLA Full Spectrum
+    color_name: Semi-Translucent White
+    hex: '#F5F4F2'
+    td: 6.5
+    source: snapmaker-orca
+    source_url: https://github.com/Snapmaker/OrcaSlicer/blob/89311782298309040ee28b9a183f33f0f5477b15/resources/profiles/Snapmaker/filament/filaments_colours.json
+    source_date: '2026-10-16'
+    notes: SKU 34266
+  - brand: Snapmaker
+    material: PLA Full Spectrum
+    color_name: Semi-Translucent Yellow
+    hex: '#FAE727'
+    td: 9.5
+    source: snapmaker-orca
+    source_url: https://github.com/Snapmaker/OrcaSlicer/blob/89311782298309040ee28b9a183f33f0f5477b15/resources/profiles/Snapmaker/filament/filaments_colours.json
+    source_date: '2026-10-16'
+    notes: SKU 34269

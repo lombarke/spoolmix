@@ -1,0 +1,19 @@
+{# How to make and upload a printer template. Needs: template (or none), next #}
+<ol class="steps-list">
+  <li><b>Open your slicer</b> and pick your <b>printer</b> and nozzle.</li>
+  <li>Pick the <b>color-mixing print process</b> you print with (for example "0.10mm Color Mixing"), and change any process
+    settings you always use. spoolmix keeps them; it only carries over a design's own supports, brim, infill and walls.</li>
+  <li>Set up <b>one filament per slot your printer has</b> (4 for a 4-toolhead printer), using the filament presets you
+    normally print with (material, temperatures). The colors don't matter: spoolmix fills in the right ones every time.</li>
+  <li>Put <b>any small object</b> on the plate (a 20 mm cube is fine) and <b>save the project</b>
+    (File → Save Project As… → <code>.3mf</code>).</li>
+  <li><b>Upload</b> that file here.</li>
+</ol>
+<form method="post" action="/template" enctype="multipart/form-data" class="row">
+  <input type="hidden" name="next" value="{{ next }}">
+  <input type="file" name="file" accept=".3mf" required>
+  <input type="text" name="name" placeholder="Name (optional)" style="width:200px">
+  <button class="{{ '' if template else 'primary' }}">{{ 'Replace template' if template else 'Upload template' }}</button>
+</form>
+<p class="muted small" style="margin-bottom:0">Replace it whenever you change its printer, nozzle, process or filament presets.
+  Its number of filaments is the slot count spoolmix plans for.</p>

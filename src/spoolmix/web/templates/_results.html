@@ -1,0 +1,101 @@
+{% macro recipe_block(r) %}
+<div class="recipe">
+  <div class="row">
+    <span class="sw mid" style="background:{{ r.predicted }}" title="predicted {{ r.predicted }}"></span>
+    <div>
+      <div><span class="de q-{{ r.quality[1] }}" style="font-size:18px">ΔE {{ r.delta_e|de }}</span>
+        <span class="muted small">{{ r.quality[0] }} · predicted <span class="hex">{{ r.predicted }}</span></span> {% if r.banding %}<span class="band band-{{ r.banding }}">{{ {'low': 'blends well', 'moderate': 'may band slightly', 'high': 'likely visible stripes'}[r.banding] }}</span>{% endif %}</div>
+    </div>
+  </div>
+  {% if r.size == 1 %}
+    <p>Use <strong>{{ r.parts[0].label }}</strong> on its own; no mix needed.</p>
+  {% else %}
+  <div class="steps">
+    {% for p in r.parts %}
+    <div class="step">
+      <span class="slot">F{{ p.slot }}</span>
+      <span class="sw" style="background:{{ p.hex }}"></span>
+      <span>{{ p.label }}{% if not p.owned %} <span class="buy">BUY</span>{% endif %}</span>
+      <span class="pct">{{ p.percent }}%</span>
+    </div>
+    {% if not loop.last %}<span class="muted">→</span>{% endif %}
+    {% endfor %}
+  </div>
+  <div class="orca">Mix ratio: {{ r.ratio_text }}</div>
+  <span class="muted small">&nbsp;order matters: lower filament number first{% if r.cycle %} · {{ r.cycle }}{% endif %}</span>
+  {% endif %}
+  {% for w in r.warnings %}<div class="warn">⚠ {{ w }}</div>{% endfor %}
+</div>
+{% endmacro %}
+
+{% if result.error %}
+  <div class="flash err">{{ result.error }}</div>
+{% else %}
+  {% if result.subdivide_template %}<div class="warn">⚠ <b>{{ result.subdivide_template }}</b> has Subdivide Mix Layer on: mixes painted
+    with it print smooth but close to one in-between color whatever the ratio, so these predictions won't hold there. They do hold
+    for whole objects and parts (unless Full domain is on) and with a template that has it off.</div>{% endif %}
+  <p class="muted small">{{ result.stock_count }} {{ result.material if result.material != 'any' }} filaments in stock ·
+    {% if result.info.model == 'calibrated' %}calibrated model (alpha {{ result.info.alpha }}{% if not result.info.calibrated %}, defaults: no calibration yet{% endif %}){% else %}slicer preview model{% endif %}</p>
+
+  {% if result.palette %}
+  <div class="result">
+    <h3>Load these {{ result.palette.slots|length }} filaments (as F1–F{{ result.palette.slots|length }}, in this order)</h3>
+    <div class="steps">
+      {% for s in result.palette.slots %}
+      <div class="step"><span class="slot">F{{ s.slot }}</span><span class="sw" style="background:{{ s.hex }}"></span>{{ s.label }}</div>
+      {% endfor %}
+    </div>
+    <span class="muted small">worst ΔE {{ result.palette.worst|de }} · average ΔE {{ result.palette.mean|de }}</span>
+  </div>
+  {% endif %}
+
+  {% for t in result.targets %}
+  <div class="result">
+    {% set best = t.recipes[0] if t.recipes else None %}
+    <div class="row" style="align-items:flex-start;gap:16px">
+      <div class="compare">
+        <div style="background:{{ t.target }}">target</div>
+        {% if best %}<div style="background:{{ best.predicted }}">mix</div>{% endif %}
+      </div>
+      <div style="flex:1;min-width:220px">
+        <div class="hex">{{ t.target }} {% if t.label %}<span class="muted">· {{ t.label }}</span>{% endif %}</div>
+        {% if best %}
+        <div class="headline">Best with your stock: <span class="q-{{ best.quality[1] }}">ΔE {{ best.delta_e|de }}</span>
+          <span class="muted small">({{ best.quality[0] }})</span></div>
+        {% endif %}
+        {% if t.shop and t.shop.options %}
+          {% set o = t.shop.options[0] %}
+          <div class="headline">Add {% for b in o.buy %}{{ b.label }}{% if not loop.last %} + {% endif %}{% endfor %}
+            → <span class="q-{{ o.recipe.quality[1] }}">ΔE {{ o.recipe.delta_e|de }}</span></div>
+        {% endif %}
+        {% if t.single %}<div class="muted small">Closest single filament: {{ t.single.label }} (ΔE {{ t.single.delta_e|de }})</div>{% endif %}
+      </div>
+    </div>
+    {% if t.dark %}<div class="warn">⚠ Very dark target: layered mixing can't make true black. Print near-black areas in black directly.</div>{% endif %}
+
+    {% for r in t.recipes %}{{ recipe_block(r) }}{% endfor %}
+
+    {% if t.shop %}
+    <div class="shop">
+      <h3>Shopping</h3>
+      {% if not t.shop.options %}
+        <p class="muted">Nothing in the catalog beats your stock (ΔE {{ t.shop.base_de|de }}).</p>
+      {% endif %}
+      {% for o in t.shop.options %}
+        <div class="recipe">
+          <div class="headline">Buy
+            {% for b in o.buy %}<span class="sw" style="background:{{ b.hex }}"></span> {{ b.label }}{% if b.url %} <a href="{{ b.url }}" target="_blank" rel="noopener" class="small">shop</a>{% endif %}{% if not loop.last %} + {% endif %}{% endfor %}
+            → ΔE {{ o.recipe.delta_e|de }} <span class="gain">−{{ '%.2f'|format(o.improvement) }}</span>
+          </div>
+          <div class="muted small">
+            {% for b in o.buy %}{{ b.label }}: TD {{ b.td if b.td is not none else 'unknown' }}{% if b.bundle %} · {{ b.bundle }}{% endif %}{% if b.price %} · {{ b.price }}{% endif %}<br>{% endfor %}
+            {% if o.pairs_with %}Pairs with your {{ o.pairs_with|join(', ') }}{% endif %}
+          </div>
+          {{ recipe_block(o.recipe) }}
+        </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+{% endif %}

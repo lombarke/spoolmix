@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}Calibrate · spoolmix{% endblock %}
+{% block content %}
+<h1>Calibrate to your prints</h1>
+<p class="muted">Print a swatch grid, enter the colors you actually got, and spoolmix fits a model that predicts real prints instead of the slicer's preview.
+  Then choose <em>Calibrated to my prints</em> when planning. Each printer template has its own calibration, because layer height and
+  process settings change how colors blend.</p>
+{% if templates|length > 1 %}
+<form method="get" action="/calibrate" class="row" style="margin-bottom:14px">
+  <label style="font-size:15px;color:var(--ink)">Calibrating for
+    <select name="t" onchange="this.form.submit()">
+      {% for t in templates %}<option value="{{ t.id }}" {{ 'selected' if template and t.id == template.id }}>{{ t.name }}{% if t.calibration() %} (calibrated){% endif %}</option>{% endfor %}
+    </select></label>
+  <noscript><button>Show</button></noscript>
+</form>
+{% endif %}
+
+<div class="grid2">
+  <div class="panel">
+    <h3>1 · Printer template</h3>
+    {% if template %}
+      <p style="margin:0 0 8px"><b>{{ template.name }}</b></p>
+      {% include "_template_card.html" %}
+      <p class="muted small">The grid copies these printer, process and filament settings, so print it with this setup.
+        <a href="/settings#t-{{ template.id }}">Manage templates</a></p>
+    {% else %}
+      <p style="margin-top:0">The grid is built from your printer template, so it prints exactly like your own projects.</p>
+      {% with next="/calibrate" %}{% include "_template_help.html" %}{% endwith %}
+    {% endif %}
+  </div>
+
+  <form class="panel" method="post" action="/calibrate/runs">
+    <input type="hidden" name="template" value="{{ template.id if template else '' }}">
+    <h3>2 · New swatch grid</h3>
+    <p class="muted small">Pick the filaments in the order you'll load them (F1–F4). The grid has every pure filament, every pair at 30–70%,
+      and each set of three, as 12 mm labelled blocks you measure on their side walls (where layers blend). 2 filaments: 7 blocks;
+      3: 21; 4: 50 (a long print: start with fewer filaments if you like).</p>
+    {% for i in range(1, 5) %}
+    <div class="row" style="margin-bottom:6px">
+      <label style="width:24px">F{{ i }}</label>
+      <select name="slot{{ i }}" {{ 'required' if i <= 2 }}>
+        <option value="">{{ '— choose —' if i <= 2 else '— none —' }}</option>
+        {% for f in stock %}<option value="{{ f.id }}">{{ f.label }} (#{{ f.hex }}{% if f.td is not none %}, TD {{ f.td }}{% endif %})</option>{% endfor %}
+      </select>
+    </div>
+    {% endfor %}
+    <div class="row"><label><input type="checkbox" name="triples" value="true" checked> include 3-filament mixes</label></div>
+    <div class="row" style="margin-top:6px"><input type="text" name="notes" placeholder="notes (batch, settings…)" style="flex:1"></div>
+    <div class="row" style="margin-top:10px"><button class="primary">Create grid</button></div>
+  </form>
+</div>
+
+<div class="panel">
+  <h3>3 · Your grids{% if template %} <span class="muted small">for {{ template.name }}</span>{% endif %}</h3>
+  {% if not runs %}<p class="muted">None yet.</p>{% endif %}
+  <table>
+    {% for r in runs %}
+    <tr>
+      <td><a href="/calibrate/runs/{{ r.id }}">{{ r.id }}</a></td>
+      <td>{% for f in r.filaments %}<span class="sw" style="width:14px;height:14px;background:#{{ f.hex }}" title="{{ f.label }}"></span> {% endfor %}</td>
+      <td class="small">{{ r.measured_count }} / {{ r.swatches|length }} measured{% if not r.walls %} · <span class="muted">old flat grid, not used for fitting</span>{% endif %}</td>
+      <td class="small muted">{{ r.notes }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
+<div class="panel">
+  <h3>4 · Fit</h3>
+  {% if cal %}
+    <div class="kv">
+      <div>Fitted</div><div>{{ cal.fitted_at }} from {{ cal.mixed_swatches }} mixed swatches</div>
+      <div>Slicer preview error</div><div>mean ΔE {{ cal.mean_de_orca }}</div>
+      <div>With printed colors</div><div>mean ΔE {{ cal.mean_de_colors_only }}</div>
+      <div>Calibrated model</div><div><strong>mean ΔE {{ cal.mean_de_fitted }}</strong> (TD alpha {{ cal.alpha }})</div>
+      <div>Printed colors</div><div>{% for k, v in cal.colors.items() %}<span class="sw" style="width:14px;height:14px;background:{{ v }}" title="{{ k }}"></span> {% endfor %}</div>
+    </div>
+  {% else %}<p class="muted">Not calibrated yet.</p>{% endif %}
+  <div class="row" style="margin-top:10px">
+    {% if template %}
+    <form method="post" action="/calibrate/fit"><input type="hidden" name="template" value="{{ template.id }}">
+      <button class="primary">Fit from this template's measured block grids</button></form>
+    {% if cal %}<form method="post" action="/calibrate/reset"><input type="hidden" name="template" value="{{ template.id }}">
+      <button>Remove calibration</button></form>{% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

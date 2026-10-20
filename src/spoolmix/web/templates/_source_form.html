@@ -1,0 +1,26 @@
+{# Where your filaments live: Spoolman or spoolmix's own list. Needs: action, submit, src, spoolman_url, td_in_spoolman #}
+<form method="post" action="{{ action }}" id="sourceform">
+  {% set kind = src.kind if src else '' %}
+  <div class="choice-list">
+    <label class="choice"><input type="radio" name="kind" value="spoolman" {{ 'checked' if kind == 'spoolman' }} required>
+      <span><b>I use Spoolman</b><br><span class="muted small">spoolmix reads your filaments and spools from your Spoolman server,
+        so there's nothing to enter twice. New spools show up here automatically.</span></span></label>
+    <div class="choice-detail" data-for="spoolman">
+      <label for="spoolman_url">Spoolman address</label>
+      <div class="row">
+        <input type="text" name="spoolman_url" id="spoolman_url" value="{{ spoolman_url }}" placeholder="http://spoolman.local:7912"
+               autocomplete="off" spellcheck="false" style="flex:1;min-width:220px">
+        <button type="button" id="testbtn">Test connection</button>
+      </div>
+      <div id="testres" class="small" style="min-height:20px;margin:6px 0"></div>
+      <label class="check"><input type="checkbox" name="td_in_spoolman" value="1" {{ 'checked' if td_in_spoolman }}>
+        <span>Let spoolmix fill in TD values in Spoolman<br><span class="muted small">Adds two custom filament fields to Spoolman
+          (<code>td</code> and <code>td_source</code>) and fills them in. A TD you entered yourself is never changed. Untick to keep
+          TD values in spoolmix and never write to Spoolman.</span></span></label>
+    </div>
+    <label class="choice"><input type="radio" name="kind" value="local" {{ 'checked' if kind == 'local' }}>
+      <span><b>I don't use Spoolman</b><br><span class="muted small">Keep a list of your filaments in spoolmix. Pick each one by brand,
+        material and color from a database of thousands of filaments, or type it in yourself.</span></span></label>
+  </div>
+  <button class="primary big">{{ submit }}</button>
+</form>

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Print a design · spoolmix{% endblock %}
+{% block content %}
+<h1>Print a design</h1>
+<p class="lead">Import a multicolor 3MF. spoolmix works out the best way to print it with the filaments you have, using color
+  mixes for the colors you don't, and tells you what to buy if a spool or two would get it closer.</p>
+
+<form method="post" action="/projects" enctype="multipart/form-data" id="uploadform">
+  <label class="dropzone" id="dropzone" for="file3mf">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M20 16.5V19a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2.5"/>
+    </svg>
+    <div class="big" id="droptext">Drop a 3MF here, or click to choose a file</div>
+    <div class="muted small" id="dropsub">Any multicolor 3MF project: painted models or models with colored parts</div>
+    <div class="progress"><div id="dropbar"></div></div>
+    <input type="file" name="file" id="file3mf" accept=".3mf">
+  </label>
+</form>
+
+{% if not has_template %}
+<div class="panel callout" style="margin-top:14px">
+  <b>One more step to download print-ready projects:</b> add your printer template. It's a small project you save once in
+  your slicer so spoolmix knows your printer, print process and filament settings. About two minutes.
+  <a class="button primary" href="/settings#templates" style="margin-left:6px">Set up printer template</a>
+</div>
+{% endif %}
+
+{% if projects %}
+<h2>Your designs</h2>
+<div class="panel" style="padding:6px 20px">
+  <table>
+    {% for p in projects %}
+    <tr>
+      <td><a href="/projects/{{ p.id }}"><b>{{ p.name }}</b></a></td>
+      <td>{% if p.analysis %}{% for f in p.analysis.filaments if f.area > 0 %}<span class="sw" style="width:18px;height:18px;background:{{ f.hex }}"></span> {% endfor %}{% else %}<span class="muted small">analyzing…</span>{% endif %}</td>
+      <td class="small muted">{% if p.plans %}ΔE {{ p.plans.base.weighted|de }} with your filaments{% endif %}</td>
+      <td class="small muted" style="text-align:right">{{ p.uploaded[:16]|replace('T', ' ') }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}<script>SpoolMix.initDropzone();</script>{% endblock %}

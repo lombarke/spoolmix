@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Grid {{ run.id }} · spoolmix{% endblock %}
+{% block content %}
+<p><a href="/calibrate">← Calibrate</a></p>
+<h1>Swatch grid {{ run.id }}</h1>
+
+<div class="grid2">
+  <div class="panel">
+    <h3>Print it</h3>
+    <div class="steps">
+      {% for f in run.filaments %}<div class="step"><span class="slot">F{{ f.slot }}</span><span class="sw" style="background:#{{ f.hex }}"></span>{{ f.label }}</div>{% endfor %}
+    </div>
+    {% if has_template %}
+      <a class="button primary" href="/calibrate/runs/{{ run.id }}/3mf">Download 3MF project</a>
+      <span class="muted small">for {{ template.name }}</span>
+    {% else %}
+      <p class="flash err">This grid's printer template was deleted, so it can't be downloaded. Create a new grid for one of your
+        <a href="/settings#templates">printer templates</a>.</p>
+    {% endif %}
+    {% if run.walls %}
+    <p class="muted small">Open it in your slicer, load the filaments above as F1–F{{ run.filaments|length }}, slice and print. Every
+      block is {{ run.tile|int }} mm tall with its label (A1, A2, …) raised on top; the small square left of A1 marks the corner.</p>
+    {% else %}
+    <p class="muted small">An older flat grid, measured from the top surface. It isn't used for fitting anymore, because layers blend on
+      side walls, not on top. Create a new grid to calibrate.</p>
+    {% endif %}
+  </div>
+  <div class="panel">
+    <h3>Measure it</h3>
+    {% if run.walls %}
+    <p class="small">Measure each block's <b>side wall</b>, where the layers show. Best: a colorimeter on the wall. Good: phone photos.</p>
+    <details id="photohelp" open>
+      <summary>Read colors from phone photos (one per row)</summary>
+      <ol class="small" style="margin:6px 0 10px;padding-left:20px">
+        <li>Line up one row's blocks in label order (A1, A2, …) on plain white paper, labels up, front faces toward you.</li>
+        <li>Photograph the front walls straight on, in daylight without flash or direct sun, from 20–30 cm.</li>
+        <li>Pick the row below, upload the photo, then click: <b>the white paper</b>, the middle of the <b>first</b> block's wall,
+          and the middle of the <b>last</b> block's wall. spoolmix reads every block in between and fills in that row.</li>
+      </ol>
+      <div class="row">
+        <label>Row <select id="photorow">{% for row in grid %}{% set n = row|select|list|length %}{% if n %}
+          <option value="{{ loop.index0 }}" data-count="{{ n }}">{{ 'ABCDEFGH'[loop.index0] }} ({{ n }} block{{ 's' if n != 1 }})</option>{% endif %}{% endfor %}</select></label>
+        <input type="file" id="photofile" accept="image/*">
+      </div>
+      <div class="stepper" id="stepper"><span>white paper</span><span>first block</span><span>last block</span></div>
+      <div id="photowrap"><canvas id="photocanvas"></canvas></div>
+    </details>
+    {% else %}
+    <p class="small">Type or pick each tile's color.</p>
+    {% endif %}
+  </div>
+</div>
+
+<form method="post" action="/calibrate/runs/{{ run.id }}/measure" class="panel" id="measureform">
+  <div class="row" style="justify-content:space-between">
+    <h3 style="margin:0">{{ 'Blocks' if run.walls else 'Tiles' }} <span class="muted small">(left: the slicer's prediction · right: what you measured)</span></h3>
+    <button class="primary">Save measurements</button>
+  </div>
+  <div class="scroll" style="margin-top:10px">
+  <div class="swgrid" id="swgrid" data-cols="8" data-rows="{{ grid|length }}" data-style="{{ run.style }}">
+    {% for row in grid %}{% for s in row %}
+      {% if s %}
+      <div class="cell" data-id="{{ s.id }}" data-row="{{ s.row }}" data-col="{{ s.col }}">
+        <div class="id">{{ s.id }}</div>
+        <div class="muted">{{ s.label }}</div>
+        <div class="pair"><div style="background:{{ s.predicted }}"></div><div class="meas" style="background:{{ s.measured or 'transparent' }}"></div></div>
+        <div class="mrow">
+          <input type="color" value="{{ (s.measured or s.predicted)|lower }}" data-for="m_{{ s.id }}">
+          <input type="text" name="m_{{ s.id }}" value="{{ s.measured or '' }}" placeholder="#RRGGBB">
+        </div>
+      </div>
+      {% else %}<div class="cell empty"></div>{% endif %}
+    {% endfor %}{% endfor %}
+  </div>
+  </div>
+  <div class="row" style="margin-top:12px">
+    <input type="text" name="notes" value="{{ run.notes }}" placeholder="notes" style="flex:1">
+    <button class="primary">Save measurements</button>
+  </div>
+</form>
+{% endblock %}
+{% block scripts %}<script>SpoolMix.initRun();</script>{% endblock %}

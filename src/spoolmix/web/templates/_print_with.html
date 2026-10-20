@@ -1,0 +1,9 @@
+{# Printer template picker: sets the filament slots. Needs: templates, chosen, design_categories (optional) #}
+<label style="font-size:15px;color:var(--ink)" title="The printer template sets the filament slots, and the printer, process and filament settings of the print-ready project">
+  Print with
+  <select name="template" class="print-with">
+    {% for t in templates %}
+    <option value="{{ t.id }}" data-slots="{{ t.slots }}" data-cats="{{ t.categories|sort|join('/') }}"
+      {{ 'selected' if chosen and t.id == chosen.id }}>{{ t.name }} · {{ t.slots }} slots</option>
+    {% endfor %}
+  </select></label>

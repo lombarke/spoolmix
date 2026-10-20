@@ -1,0 +1,7 @@
+{# Striping vs color trade-off. Needs: priority (current value) #}
+<label title="When the closest color would need a mix that may show stripes, which matters more to you?">Favor
+  <select name="priority">
+    <option value="balanced" {{ 'selected' if priority == 'balanced' }}>Balanced</option>
+    <option value="smooth" {{ 'selected' if priority == 'smooth' }}>Smooth blends (fewer stripes)</option>
+    <option value="color" {{ 'selected' if priority == 'color' }}>Exact colors</option>
+  </select></label>

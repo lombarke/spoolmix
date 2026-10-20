@@ -1,0 +1,183 @@
+[
+    {
+        "id": 1,
+        "registered": "2026-10-16T12:52:18Z",
+        "name": "Cyan",
+        "vendor": {
+            "id": 1,
+            "registered": "2026-10-16T12:52:18Z",
+            "name": "Sunlu",
+            "external_id": "Sunlu",
+            "extra": {}
+        },
+        "material": "PLA+",
+        "density": 1.24,
+        "diameter": 1.75,
+        "weight": 1000.0,
+        "spool_weight": 130.0,
+        "settings_extruder_temp": 210,
+        "settings_bed_temp": 60,
+        "color_hex": "39D0F1",
+        "external_id": "sunlu_pla+_cyan_1000_175_p",
+        "extra": {},
+        "tags": []
+    },
+    {
+        "id": 2,
+        "registered": "2026-10-16T12:53:23Z",
+        "name": "Magenta PLA",
+        "vendor": {
+            "id": 1,
+            "registered": "2026-10-16T12:52:18Z",
+            "name": "Sunlu",
+            "external_id": "Sunlu",
+            "extra": {}
+        },
+        "material": "PLA",
+        "density": 1.24,
+        "diameter": 1.75,
+        "weight": 1000.0,
+        "spool_weight": 130.0,
+        "settings_extruder_temp": 210,
+        "settings_bed_temp": 50,
+        "color_hex": "FF00FF",
+        "extra": {},
+        "tags": []
+    },
+    {
+        "id": 3,
+        "registered": "2026-10-16T12:54:25Z",
+        "name": "Yellow (Glow Yellow)",
+        "vendor": {
+            "id": 1,
+            "registered": "2026-10-16T12:52:18Z",
+            "name": "Sunlu",
+            "external_id": "Sunlu",
+            "extra": {}
+        },
+        "material": "PLA",
+        "density": 1.26,
+        "diameter": 1.75,
+        "weight": 1000.0,
+        "spool_weight": 130.0,
+        "settings_extruder_temp": 210,
+        "settings_bed_temp": 60,
+        "color_hex": "FFFF00",
+        "external_id": "sunlu_pla_yellow(glowyellow)_1000_175_p",
+        "extra": {},
+        "tags": []
+    },
+    {
+        "id": 4,
+        "registered": "2026-10-16T12:54:36Z",
+        "name": "White",
+        "vendor": {
+            "id": 1,
+            "registered": "2026-10-16T12:52:18Z",
+            "name": "Sunlu",
+            "external_id": "Sunlu",
+            "extra": {}
+        },
+        "material": "PLA",
+        "density": 1.23,
+        "diameter": 1.75,
+        "weight": 1000.0,
+        "spool_weight": 162.0,
+        "settings_extruder_temp": 210,
+        "settings_bed_temp": 60,
+        "color_hex": "C7CDD7",
+        "external_id": "sunlu_pla_white_1000_175_p",
+        "extra": {},
+        "tags": []
+    },
+    {
+        "id": 5,
+        "registered": "2026-10-16T12:55:04Z",
+        "name": "Black",
+        "vendor": {
+            "id": 1,
+            "registered": "2026-10-16T12:52:18Z",
+            "name": "Sunlu",
+            "external_id": "Sunlu",
+            "extra": {}
+        },
+        "material": "PLA+",
+        "density": 1.24,
+        "diameter": 1.75,
+        "weight": 1000.0,
+        "spool_weight": 130.0,
+        "settings_extruder_temp": 210,
+        "settings_bed_temp": 60,
+        "color_hex": "000000",
+        "external_id": "sunlu_pla+_black_1000_175_p",
+        "extra": {},
+        "tags": []
+    },
+    {
+        "id": 6,
+        "registered": "2026-10-16T12:55:20Z",
+        "name": "Red",
+        "vendor": {
+            "id": 1,
+            "registered": "2026-10-16T12:52:18Z",
+            "name": "Sunlu",
+            "external_id": "Sunlu",
+            "extra": {}
+        },
+        "material": "PLA",
+        "density": 1.23,
+        "diameter": 1.75,
+        "weight": 1000.0,
+        "spool_weight": 162.0,
+        "settings_extruder_temp": 210,
+        "settings_bed_temp": 60,
+        "color_hex": "AC3638",
+        "external_id": "sunlu_pla_red_1000_175_p",
+        "extra": {},
+        "tags": []
+    },
+    {
+        "id": 7,
+        "registered": "2026-10-16T12:55:42Z",
+        "name": "Orange",
+        "vendor": {
+            "id": 1,
+            "registered": "2026-10-16T12:52:18Z",
+            "name": "Sunlu",
+            "external_id": "Sunlu",
+            "extra": {}
+        },
+        "material": "PLA+",
+        "density": 1.24,
+        "diameter": 1.75,
+        "weight": 1000.0,
+        "spool_weight": 130.0,
+        "settings_extruder_temp": 210,
+        "settings_bed_temp": 60,
+        "color_hex": "F25602",
+        "external_id": "sunlu_pla+_orange_1000_175_p",
+        "extra": {},
+        "tags": []
+    },
+    {
+        "id": 8,
+        "registered": "2026-10-16T12:55:58Z",
+        "name": "Meta Grey",
+        "vendor": {
+            "id": 1,
+            "registered": "2026-10-16T12:52:18Z",
+            "name": "Sunlu",
+            "external_id": "Sunlu",
+            "extra": {}
+        },
+        "material": "PLA",
+        "density": 1.22,
+        "diameter": 1.75,
+        "weight": 1000.0,
+        "spool_weight": 130.0,
+        "color_hex": "75787B",
+        "external_id": "sunlu_pla_metagrey_1000_175_p",
+        "extra": {},
+        "tags": []
+    }
+]

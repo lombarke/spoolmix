@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% block title %}Filaments & TD · spoolmix{% endblock %}
+{% block content %}
+<h1>Filaments &amp; TD</h1>
+{% if local %}
+<p class="lead">The filaments you have. spoolmix plans with the ones ticked "Have".</p>
+<div class="panel" id="add">
+  <h3>Add a filament</h3>
+  <p class="muted small" style="margin-top:0">Start typing a brand: thousands of filaments are listed{% if not db_ready %} (the list downloads
+    the first time you open this){% endif %}. If yours isn't there, type it in and pick the color yourself.</p>
+  <form method="post" action="/filaments/add" id="addform" autocomplete="off">
+    <div class="addgrid">
+      <div><label for="f-brand">Brand</label><input type="text" name="brand" id="f-brand" list="dl-brands" placeholder="e.g. Sunlu"></div>
+      <div><label for="f-material">Material</label><input type="text" name="material" id="f-material" list="dl-materials" placeholder="e.g. PLA" required></div>
+      <div><label for="f-name">Color name</label><input type="text" name="name" id="f-name" placeholder="e.g. Forest Green" required></div>
+    </div>
+    <div id="dbcolors" class="dbcolors" hidden>
+      <div class="muted small" id="dbcolors-head"></div>
+      <div class="dbgrid" id="dbgrid"></div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <div><label for="f-hex">Color</label>
+        <div class="row" style="gap:6px"><input type="color" id="f-color" value="#888888">
+          <input type="text" name="hex" id="f-hex" placeholder="#3A7BD5" required style="width:110px" class="hex"></div></div>
+      <div><label for="f-td">TD <span class="muted">(optional)</span></label>
+        <input type="number" name="td" id="f-td" step="0.1" min="0.1" max="100" placeholder="auto" style="width:90px"></div>
+      <input type="hidden" name="db_id" id="f-dbid">
+      <button class="primary" style="align-self:flex-end">Add filament</button>
+    </div>
+    <p class="warn" id="texnote" hidden style="margin:10px 0 0">⚠ This filament is speckled (marble, galaxy, glitter…), so it doesn't
+      print as one flat color. You can still add it: spoolmix plans with its average color and warns you wherever it's used, especially in mixes.</p>
+    <p class="muted small" style="margin-bottom:0">Leave TD empty and spoolmix fills it in: a published value for that filament, or an estimate.</p>
+  </form>
+  <datalist id="dl-brands"></datalist>
+  <datalist id="dl-materials">{% for m in materials %}<option value="{{ m }}">{% endfor %}</datalist>
+</div>
+
+<div class="panel">
+  <div class="row" style="justify-content:space-between">
+    <h3 style="margin:0">Your filaments <span class="muted small">({{ rows|selectattr('f.in_stock')|list|length }} you have, {{ rows|length }} listed)</span></h3>
+    <div class="row">
+      <input type="search" id="tfilter" placeholder="Filter…" style="width:180px">
+      <select id="tmaterial"><option value="">All materials</option>
+        {% for m in rows|map(attribute='f.material')|reject('none')|unique|sort %}<option>{{ m }}</option>{% endfor %}</select>
+    </div>
+  </div>
+  {% if not rows %}<p class="muted">Nothing here yet. Add the filaments you have above.</p>{% else %}
+  <div class="scroll">
+  <table id="ftable" class="sortable">
+    <thead><tr><th data-sort="have" title="Do you have this filament?">Have</th><th></th><th data-sort="brand">Brand</th><th data-sort="material">Material</th>
+      <th data-sort="name">Color</th><th data-sort="hex">Hex</th><th data-sort="td">TD</th><th>Where the TD came from</th><th></th></tr></thead>
+    <tbody>
+    {% for r in rows %}{% set f = r.f %}{% set src = r.source %}
+    <tr id="f{{ f.id }}" class="frow {{ '' if f.in_stock else 'dim' }}" data-have="{{ 0 if f.in_stock else 1 }}" data-brand="{{ (f.vendor or '')|lower }}" data-material="{{ f.material or '' }}"
+        data-name="{{ f.name|lower }}" data-hex="{{ f.hex or '' }}" data-td="{{ f.td if f.td is not none else 999 }}">
+      <td><form method="post" action="/filaments/{{ f.id }}/have"><input type="checkbox" name="have" value="true" {{ 'checked' if f.in_stock }}
+          onchange="this.form.submit()" aria-label="I have this"></form></td>
+      <td><span class="sw" style="background:#{{ f.hex or '888' }}"></span></td>
+      <td>{{ f.vendor or '' }}</td>
+      <td>{{ f.material or '' }}</td>
+      <td>{{ f.name }}{% with label=f.label %}{% include "_texture.html" %}{% endwith %}</td>
+      <td class="hex">#{{ f.hex }}</td>
+      <td>{% if r.multicolor %}<span class="muted small">—</span>
+          {% elif f.td is not none %}<strong>{{ f.td }}</strong>
+            <span class="tag {{ 'high' if src.kind == 'published' else 'user' if src.kind == 'yours' else '' }}">{{ src.kind or 'yours' }}</span>
+          {% else %}<span class="muted">—</span>{% endif %}</td>
+      <td class="small">
+        {% if src.kind == 'published' %}{% if src.url %}<a href="{{ src.url }}" target="_blank" rel="noopener">{{ src.text }}</a>{% else %}{{ src.text }}{% endif %}
+        {% elif src.kind == 'estimate' %}<span class="muted" title="{{ src.text }}">Estimated from similar measured filaments</span>
+        {% elif src.kind == 'yours' %}{{ src.text }}
+        {% elif r.missing %}<span class="muted">No similar {{ f.material or '' }} filament has been measured yet.</span>
+        {% else %}<span class="muted">Looking it up…</span>{% endif %}
+      </td>
+      <td style="text-align:right"><button type="button" class="link" data-edit="e{{ f.id }}">Edit</button></td>
+    </tr>
+    <tr class="editrow" id="e{{ f.id }}" {{ '' if edit == f.id else 'hidden' }}>
+      <td colspan="9">
+        <div class="editbox">
+          <form method="post" action="/filaments/{{ f.id }}/edit" class="editform">
+            <div><label>Brand</label><input type="text" name="brand" value="{{ f.vendor or '' }}" list="dl-brands"></div>
+            <div><label>Material</label><input type="text" name="material" value="{{ f.material or '' }}" list="dl-materials" required></div>
+            <div><label>Color name</label><input type="text" name="name" value="{{ f.name }}" required></div>
+            <div><label>Color</label><span class="row" style="gap:6px"><input type="color" value="#{{ f.hex|lower }}" data-hexfor="h{{ f.id }}">
+              <input type="text" name="hex" id="h{{ f.id }}" value="#{{ f.hex }}" class="hex" style="width:100px" required></span></div>
+            <button class="primary">Save</button>
+          </form>
+          <div class="row" style="justify-content:space-between">
+            <form method="post" action="/td/set" class="tdform">
+              <input type="hidden" name="filament_id" value="{{ f.id }}">
+              <span class="small muted">Measured its TD yourself?</span>
+              <input type="number" step="0.1" min="0.1" max="100" placeholder="TD" name="td" required>
+              <select name="method"><option value="td1">TD-1</option><option value="seashell">Seashell</option><option value="other">other</option></select>
+              <label><input type="checkbox" name="add_to_db" value="true" checked> remember</label>
+              <button>Set TD</button>
+            </form>
+            <form method="post" action="/filaments/{{ f.id }}/delete" data-confirm="Delete {{ f.label }}?" onsubmit="return confirm(this.dataset.confirm)">
+              <button class="danger">Delete filament</button>
+            </form>
+          </div>
+        </div>
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p class="muted small">Untick "Have" for a filament you've run out of: it stays in your list but isn't used in plans.</p>
+  {% endif %}
+</div>
+<div class="panel">
+  <p style="margin-top:0">spoolmix fills in every filament's <b>TD</b> (how translucent it is) automatically, so there's nothing to do here.</p>
+  <ul class="small" style="margin:0 0 8px">
+    <li><b>Published:</b> the measured value for your exact filament from Snapmaker, Prusa or filamentcolors.xyz.
+      These sources are re-checked weekly for the brands you own.</li>
+    <li><b>Estimate:</b> when nothing is published, an estimate from the most similar measured filaments (same material and type,
+      nearest color; the same brand if possible). It's upgraded automatically once a published value appears.</li>
+    <li><b>Yours:</b> a value you entered. spoolmix never changes it.</li>
+  </ul>
+  <form method="post" action="/td/refresh" class="row">
+    <button>Check published sources now</button>
+    <span class="muted small">{% if published_age is not none %}last checked {{ '%.0f'|format(published_age * 24) if published_age < 1 else '%.0f'|format(published_age) }} {{ 'hours' if published_age < 1 else 'days' }} ago{% else %}not checked yet (using the bundled database){% endif %}</span>
+  </form>
+  {% if sync and sync.written %}<p class="small" style="margin-bottom:0">Just updated: {% for w in sync.written %}{{ w.label }} → {{ w.td }} ({{ 'estimate' if w.kind == 'estimate' else 'published' }}){% if not loop.last %}; {% endif %}{% endfor %}</p>{% endif %}
+</div>
+
+{% else %}
+<div class="panel">
+  <p style="margin-top:0">spoolmix fills in every filament's <b>TD</b> (how translucent it is) automatically, so there's nothing to do here.</p>
+  <ul class="small" style="margin:0 0 8px">
+    <li><b>Published:</b> the measured value for your exact filament from Snapmaker, Prusa or filamentcolors.xyz.
+      These sources are re-checked weekly for the brands you own.</li>
+    <li><b>Estimate:</b> when nothing is published, an estimate from the most similar measured filaments (same material and type,
+      nearest color; the same brand if possible). It's upgraded automatically once a published value appears.</li>
+    <li><b>Yours:</b> a value you entered. spoolmix never changes it.</li>
+  </ul>
+  <form method="post" action="/td/refresh" class="row">
+    <button>Check published sources now</button>
+    <span class="muted small">{% if published_age is not none %}last checked {{ '%.0f'|format(published_age * 24) if published_age < 1 else '%.0f'|format(published_age) }} {{ 'hours' if published_age < 1 else 'days' }} ago{% else %}not checked yet (using the bundled database){% endif %}</span>
+  </form>
+  {% if sync and sync.written %}<p class="small" style="margin-bottom:0">Just updated: {% for w in sync.written %}{{ w.label }} → {{ w.td }} ({{ 'estimate' if w.kind == 'estimate' else 'published' }}){% if not loop.last %}; {% endif %}{% endfor %}</p>{% endif %}
+</div>
+
+<div class="panel">
+  <div class="row" style="justify-content:space-between">
+    <h3 style="margin:0">Your filaments</h3>
+    <a href="/filaments?show_all={{ 'false' if show_all else 'true' }}" class="small">{{ 'Hide' if show_all else 'Show' }} filaments without stock</a>
+  </div>
+  <div class="scroll">
+  <table>
+    <tr><th></th><th>Filament</th><th>TD</th><th>Where it came from</th><th>Measured it yourself?</th></tr>
+    {% for r in rows %}{% set f = r.f %}{% set src = r.source %}
+    <tr>
+      <td><span class="sw" style="background:#{{ f.hex or '888' }}"></span></td>
+      <td>{{ f.label }}{% with label=f.label %}{% include "_texture.html" %}{% endwith %}<br><span class="muted small">#{{ f.id }} · {{ '%.0f'|format(f.remaining_weight) }} g</span></td>
+      <td>{% if r.multicolor %}<span class="muted small">—</span>
+          {% elif f.td is not none %}<strong>{{ f.td }}</strong>
+            <span class="tag {{ 'high' if src.kind == 'published' else 'user' if src.kind == 'yours' else '' }}">{{ src.kind or 'yours' }}</span>
+          {% else %}<span class="muted">—</span>{% endif %}</td>
+      <td class="small">
+        {% if r.multicolor %}<span class="muted">Multicolor/gradient spool: not used for mixing.</span>
+        {% elif r.missing in ('no color in Spoolman', 'no material in Spoolman') %}<span class="q-warn">Not used: add a {{ 'color' if r.missing == 'no color in Spoolman' else 'material (e.g. PLA)' }} to this filament in Spoolman.</span>
+        {% elif src.kind == 'published' %}{% if src.url %}<a href="{{ src.url }}" target="_blank" rel="noopener">{{ src.text }}</a>{% else %}{{ src.text }}{% endif %}
+        {% elif src.kind == 'estimate' %}<span class="muted">{{ src.text }}</span>
+        {% elif src.kind == 'yours' %}{{ src.text }}
+        {% elif r.missing == 'no color in Spoolman' %}<span class="q-warn">Add a color to this filament in Spoolman to use it.</span>
+        {% elif r.missing == 'no material in Spoolman' %}<span class="q-warn">Add a material (e.g. PLA) to this filament in Spoolman to use it.</span>
+        {% elif r.missing %}<span class="muted">No similar {{ f.material or '' }} filament has been measured yet.</span>{% endif %}
+      </td>
+      <td>
+        <form method="post" action="/td/set" class="tdform">
+          <input type="hidden" name="filament_id" value="{{ f.id }}">
+          <input type="number" step="0.1" min="0.1" max="100" placeholder="TD" name="td" required>
+          <select name="method"><option value="td1">TD-1</option><option value="seashell">Seashell</option><option value="other">other</option></select>
+          <label><input type="checkbox" name="add_to_db" value="true" checked> remember</label>
+          <button>Set</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+  <p class="muted small">You don't need to measure anything. If you do have a TD-1 meter (or run HueForge's Seashell test), entering your value overrides
+    published values and estimates, and "remember" reuses it for other spools of the same product.</p>
+</div>
+{% endif %}
+{% endblock %}
+{% block scripts %}{% if local %}<script>SpoolMix.initFilaments();</script>{% endif %}{% endblock %}

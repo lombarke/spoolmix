@@ -1,0 +1,20 @@
+{# Summary of the uploaded printer template. Needs: template #}
+<div class="kv small">
+  <div>Printer</div><div>{{ template.info.printer or '—' }}{% if template.info.nozzle %} · {{ template.info.nozzle }} mm nozzle{% endif %}</div>
+  <div>Print process</div><div>{{ template.info.process or '—' }}{% if template.info.layer_height %} · {{ template.info.layer_height }} mm layers{% endif %}</div>
+  <div>Filament slots</div><div>{{ template.info.slots }}:
+    {% for name, col in template.info.filaments %}<span class="sw" style="width:14px;height:14px;background:{{ col }}" title="{{ name }}"></span> {% endfor %}
+    <span class="muted">({{ template.info.filaments|map(attribute=0)|unique|join(', ') }})</span></div>
+  <div>Subdivide mix layers</div><div>{{ 'on' if template.info.subdivide else 'off' }}</div>
+</div>
+{% if not template.info.mixing %}
+<p class="flash err small" style="margin:10px 0 0">This project has no color-mixing settings, so it wasn't saved by a slicer that supports
+  mixed filaments. Plans still work, but print-ready projects need a slicer with color mixing: save the template again from one.</p>
+{% endif %}
+{% if template.info.subdivide %}
+<p class="warn" style="margin:10px 0 0">⚠ <b>Subdivide Mix Layer is on</b>{% if template.info.subdivide_whole %} (with Full domain){% endif %}.
+  {% if template.info.subdivide_whole %}Every mix{% else %}Mixes in painted areas{% endif %} print as thin interleaved sub-layers: very
+  smooth, but in test prints at 0.1 mm layers the ratio barely mattered. Cyan/yellow from 65/35 to 20/80 all came out the same
+  green, and even 80/20 landed near the middle. spoolmix predicts colors from the ratio, so expect those mixes to come out
+  different. For accurate mixed colors, use a template with it off.</p>
+{% endif %}

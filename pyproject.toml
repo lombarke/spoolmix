@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "spoolmix"
+version = "0.2.0"
+description = "Plan multicolor 3D prints with filament color mixing, using the filaments you have"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "lombarke" }]
+dependencies = [
+    "typer>=0.12",
+    "rich>=13.7",
+    "httpx>=0.27",
+    "ruamel.yaml>=0.18",
+    "rapidfuzz>=3.9",
+    "numpy>=1.26",
+    "pillow>=10.4",
+    "python-dotenv>=1.0",
+    "fastapi>=0.143.3",
+    "uvicorn[standard]>=0.54.0",
+    "jinja2>=3.1.6",
+    "python-multipart>=0.0.32",
+]
+
+[project.scripts]
+spoolmix = "spoolmix.cli:app"
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "playwright>=1.64.0",
+    "pytest>=8.2",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/spoolmix"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Shopping · spoolmix{% endblock %}
+{% block content %}
+<h1>Shopping</h1>
+<p class="lead">When "Suggest spools to buy" is on, spoolmix looks for 1–2 spools that would get your colors closer. It searches
+  every single-color filament in <a href="https://github.com/Donkie/SpoolmanDB" target="_blank" rel="noopener">SpoolmanDB</a>, the open
+  filament database Spoolman uses, plus your own list below. Only filaments of a compatible material are suggested.</p>
+
+<div class="grid2">
+  <div class="panel">
+    <h3>Suggest filaments from</h3>
+    <p style="margin:0 0 8px">{{ scopes[scope] }}</p>
+    <a href="/settings" class="small">Change in Settings</a>
+  </div>
+  <div class="panel">
+    <h3>SpoolmanDB</h3>
+    <div class="stat">{{ '{:,}'.format(db_count) }}</div>
+    <p class="muted small" style="margin-top:2px">single-color 1.75 mm filaments ·
+      {% if db_age is not none %}updated {{ '%.0f'|format(db_age * 24) ~ ' hours' if db_age < 1 else '%.0f'|format(db_age) ~ ' days' }} ago, refreshed weekly{% else %}not downloaded yet: it downloads automatically on first use{% endif %}</p>
+    <form method="post" action="/shopping/refresh"><button>Update now</button></form>
+    <p class="muted small">Suggestions get a TD the same way your spools do (published or estimated) and a link to search for the spool online.</p>
+  </div>
+</div>
+
+<div class="panel">
+  <h3>Your own list</h3>
+  <p class="muted small">Filaments you'd like considered first, e.g. a favorite brand, with store links and prices. It starts with
+    Snapmaker's Full Spectrum filaments (made for color mixing) and some common PLA colors. Add your own in a file named
+    <code>data/catalog.&lt;anything&gt;.local.yaml</code> (see <a href="https://github.com/lombarke/spoolmix/blob/main/docs/how-it-works.md#customizing-the-data" target="_blank" rel="noopener">the guide</a>).</p>
+  <div class="scroll">
+  <table>
+    <tr><th></th><th>Filament</th><th>Hex</th><th>TD</th><th>Notes</th></tr>
+    {% for i in items %}
+    <tr>
+      <td><span class="sw" style="background:{{ i.hex }}"></span></td>
+      <td>{% if i.url %}<a href="{{ i.url }}" target="_blank" rel="noopener">{{ i.label }}</a>{% else %}{{ i.label }}{% endif %}</td>
+      <td class="hex">{{ i.hex|upper }}</td>
+      <td>{% if i.td is not none %}{{ i.td }}{% else %}<span class="muted">—</span>{% endif %}</td>
+      <td class="small muted">{{ i.bundle or '' }}{% if i.price %} · {{ i.price }}{% endif %}{% if i.notes %} {{ i.notes }}{% endif %}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+</div>
+{% endblock %}

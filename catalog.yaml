@@ -1,0 +1,151 @@
+# spoolmix purchase catalog: filaments `spoolmix match --shop` may suggest buying.
+#
+# Edit freely. Fields per item:
+#   id          unique slug (required)
+#   brand, material, color_name   used to fill TD from td_database.yaml
+#   hex         sRGB color (required)
+#   td          leave blank to fill from td_database.yaml (high-confidence matches only)
+#   bundle      optional group label, e.g. a multi-spool pack
+#   url, price, notes   optional, shown in output
+#   enabled     set false to hide an item without deleting it
+#
+# Extra local catalogs (e.g. from `spoolmix catalog import-spoolmandb`) live in
+# data/catalog.*.local.yaml and are merged in automatically.
+schema_version: 1
+items:
+  # --- Snapmaker PLA Full Spectrum (semi-translucent, designed for color mixing) ---
+  # Hex and TD from Snapmaker Orca's filaments_colours.json; bundle info from snapmaker.com.
+  - id: snapmaker-fs-cyan
+    brand: Snapmaker
+    material: PLA Full Spectrum
+    color_name: Semi-Translucent Cyan
+    hex: "#00C3FF"
+    bundle: Full Spectrum Bundle (CMY + Gray, 4 x 1 kg)
+    url: https://us.snapmaker.com/collections/materials/products/pla-full-spectrum-filament-bundle-4kg
+    price: 89 USD per 4-spool bundle (2026-10)
+  - id: snapmaker-fs-magenta
+    brand: Snapmaker
+    material: PLA Full Spectrum
+    color_name: Semi-Translucent Magenta
+    hex: "#F54399"
+    bundle: Full Spectrum Bundle (CMY + Gray, 4 x 1 kg)
+    url: https://us.snapmaker.com/collections/materials/products/pla-full-spectrum-filament-bundle-4kg
+  - id: snapmaker-fs-yellow
+    brand: Snapmaker
+    material: PLA Full Spectrum
+    color_name: Semi-Translucent Yellow
+    hex: "#FAE727"
+    bundle: Full Spectrum Bundle (CMY + Gray, 4 x 1 kg)
+    url: https://us.snapmaker.com/collections/materials/products/pla-full-spectrum-filament-bundle-4kg
+  - id: snapmaker-fs-gray
+    brand: Snapmaker
+    material: PLA Full Spectrum
+    color_name: Semi-Translucent Gray
+    hex: "#9199A4"
+    bundle: Full Spectrum Bundle (CMY + Gray, 4 x 1 kg)
+    url: https://us.snapmaker.com/collections/materials/products/pla-full-spectrum-filament-bundle-4kg
+  - id: snapmaker-fs-white
+    brand: Snapmaker
+    material: PLA Full Spectrum
+    color_name: Semi-Translucent White
+    hex: "#F5F4F2"
+    bundle: Full Spectrum Bundle White Edition (CMY + White)
+    url: https://wiki.snapmaker.com/en/FAQ/Modules_Accessories_Materials/PLA_Full_Spectrum_Filament_Bundle_White_Edition
+
+  # --- Common PLA colors (hex/TD from filamentcolors.xyz measurements) ---
+  - id: sunlu-pla-blue
+    brand: Sunlu
+    material: PLA
+    color_name: Blue
+    hex: "#006AB8"
+  - id: sunlu-pla-sky-blue
+    brand: Sunlu
+    material: PLA
+    color_name: Sky Blue
+    hex: "#0CB7CC"
+  - id: sunlu-pla-green-mint
+    brand: Sunlu
+    material: PLA
+    color_name: Green Mint
+    hex: "#4CCB9A"
+  - id: sunlu-pla-cherry-red
+    brand: Sunlu
+    material: PLA
+    color_name: Cherry Red
+    hex: "#EA4A5D"
+  - id: sunlu-pla-sunny-orange
+    brand: Sunlu
+    material: PLA
+    color_name: Sunny Orange
+    hex: "#FF7235"
+  - id: sunlu-pla-transparent
+    brand: Sunlu
+    material: PLA
+    color_name: Transparent
+    hex: "#C8C7BF"
+    notes: Clear; lightens mixes without adding color
+  - id: sunlu-plaplus-green
+    brand: Sunlu
+    material: PLA+
+    color_name: Green
+    hex: "#4EE349"
+  - id: sunlu-plaplus-klein-blue
+    brand: Sunlu
+    material: PLA+
+    color_name: Klein Blue
+    hex: "#264E9E"
+  - id: sunlu-plaplus-purple
+    brand: Sunlu
+    material: PLA+
+    color_name: Purple
+    hex: "#8887C5"
+  - id: sunlu-plaplus-pure-yellow
+    brand: Sunlu
+    material: PLA+
+    color_name: Pure Yellow
+    hex: "#FFBD2C"
+  - id: sunlu-plaplus-beige
+    brand: Sunlu
+    material: PLA+
+    color_name: Beige
+    hex: "#DDBCAC"
+  - id: sunlu-pla-meta-sakura-pink
+    brand: Sunlu
+    material: PLA Meta
+    color_name: Sakura Pink
+    hex: "#F5B5C2"
+  - id: sunlu-pla-meta-taro-purple
+    brand: Sunlu
+    material: PLA Meta
+    color_name: Taro Purple
+    hex: "#A69ED0"
+  - id: polymaker-polylite-lemon-yellow
+    brand: Polymaker
+    material: PolyLite PLA
+    color_name: Lemon Yellow
+    hex: "#F1E049"
+  - id: polymaker-polylite-aqua-blue
+    brand: Polymaker
+    material: PolyLite PLA
+    color_name: Aqua Blue
+    hex: "#6EC9D8"
+  - id: polymaker-polylite-azure-blue
+    brand: Polymaker
+    material: PolyLite PLA
+    color_name: Azure Blue
+    hex: "#005C9C"
+  - id: overture-pla-green
+    brand: Overture
+    material: PLA
+    color_name: Green
+    hex: "#318C49"
+  - id: overture-pla-highlight-yellow
+    brand: Overture
+    material: PLA
+    color_name: Highlight Yellow
+    hex: "#FBF93C"
+  - id: bambu-pla-basic-blue
+    brand: Bambu Lab
+    material: PLA Basic
+    color_name: Blue
+    hex: "#23529A"

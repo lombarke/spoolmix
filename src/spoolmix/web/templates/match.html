@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}Match a color · spoolmix{% endblock %}
+{% block content %}
+<h1>Match a color</h1>
+<form id="matchform" class="panel" autocomplete="off">
+  <div class="grid2">
+    <div>
+      <h3>Target colors</h3>
+      <div class="row">
+        <input type="color" id="picker" value="#1f4d2b" aria-label="Pick a color">
+        <input type="text" id="hexin" placeholder="#1F4D2B" size="10" aria-label="Hex color">
+        <button type="button" id="addhex">Add</button>
+      </div>
+      <div class="chips" id="chips"></div>
+      <p class="muted small">One color finds the best mixes. Several colors (or an image) pick the best set of filaments for your printer's slots and one filament order that covers them all.</p>
+    </div>
+    <div>
+      <h3>…or from an image</h3>
+      <div class="row">
+        <input type="file" id="imgfile" accept="image/*">
+      </div>
+      <div class="row" style="margin-top:8px">
+        <label for="kcolors">Main colors</label>
+        <input type="number" id="kcolors" value="4" min="1" max="12" style="width:64px">
+        <button type="button" id="autocolors" disabled>Find main colors</button>
+      </div>
+      <p class="muted small">Or click the image to add the color under the cursor.</p>
+    </div>
+  </div>
+  <div id="imgwrap"><canvas id="imgcanvas"></canvas></div>
+
+  <details style="margin-top:12px">
+    <summary>Options</summary>
+    <div class="row" style="margin-top:10px">
+      <label>Prediction
+        <select name="model">
+          <option value="orca">Slicer preview</option>
+          <option value="calibrated">Calibrated to my prints{% if not (calibrated.values()|select|list) %} (not calibrated yet){% endif %}</option>
+        </select>
+      </label>
+      <label>Max per filament <input type="number" name="max_pct" value="70" min="50" max="100" style="width:64px">%</label>
+      <label>Recipes shown <input type="number" name="top" value="3" min="1" max="10" style="width:56px"></label>
+      {% if not templates %}<label title="How many different filaments your printer can use in one print">Filament slots <input type="number" name="slots" value="{{ default_slots }}" min="1" max="16" style="width:60px"></label>{% endif %}
+      <label><input type="checkbox" name="pairs_only" value="true"> 2-filament mixes only</label>
+    </div>
+  </details>
+
+  <div class="row" style="margin-top:14px">
+    <label>Material
+      <select name="material">
+        {% for c in categories %}<option value="{{ c }}" {{ 'selected' if loop.first }}>{{ c }} only</option>{% endfor %}
+        <option value="any" {{ 'selected' if not categories }}>Any (compatible mixes only)</option>
+      </select>
+    </label>
+    <label style="font-size:15px;color:var(--ink)"><input type="checkbox" name="shop" value="true" checked> Suggest spools to buy</label>
+    <select name="max_buy"><option value="2">up to 2 spools</option><option value="1">1 spool only</option></select>
+    {% if templates %}{% with chosen=templates[0], design_categories=none %}{% include "_print_with.html" %}{% endwith %}{% endif %}
+    {% include "_priority.html" %}
+    <span style="flex:1"></span>
+    <button type="submit" class="primary big" id="go">Find mixes</button>
+  </div>
+  <input type="hidden" name="targets" id="targets">
+</form>
+<div class="spinner" id="spinner">Searching mixes… (a few seconds with shopping on)</div>
+<div id="results"></div>
+{% endblock %}
+{% block scripts %}<script>SpoolMix.initMatch();</script>{% endblock %}
