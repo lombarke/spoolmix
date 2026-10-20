@@ -11,7 +11,8 @@ fiddly, so spoolmix does it for you:
 
 - Drop in a multicolor 3MF (a model you designed or downloaded) and it tells you which
   filaments to load, mixes the colors you don't have, and builds a print-ready project.
-- Pick any color (or click one in a photo) and get mix recipes you can type into your slicer.
+- On **Match a color**, pick any color (or click one in a photo) and get mix recipes you can
+  type into your slicer.
 - When a spool or two would make a real difference, it tells you which ones to buy, and when
   it's simpler to just buy the missing color, it says so.
 

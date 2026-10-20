@@ -219,3 +219,5 @@ footer { color: var(--muted); font-size: 12px; padding: 24px 0 36px; border-top:
 .swapdetails { margin: 4px 0 12px; }
 .swapdetails > summary { color: var(--accent); font-size: 14px; font-weight: 500; }
 .swapdetails[open] > summary { margin-bottom: 4px; }
+.photoguide { margin: 8px 0 4px; }
+.photoguide svg { width: 100%; max-width: 520px; height: auto; display: block; }
