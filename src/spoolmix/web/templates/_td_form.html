@@ -1,0 +1,15 @@
+{# "Measured it yourself?" TD entry. Needs: f (filament), button (label) #}
+<form method="post" action="/td/set" class="tdform">
+  <input type="hidden" name="filament_id" value="{{ f.id }}">
+  <span class="small muted">Measured it yourself?
+    <a href="https://github.com/lombarke/spoolmix/blob/main/docs/how-it-works.md#td-transmission-distance" target="_blank" rel="noopener"
+       title="TD (transmission distance) is how much light passes through a filament. spoolmix fills it in automatically; enter a value only if you measured it.">what's this?</a></span>
+  <input type="number" step="0.1" min="0.1" max="100" placeholder="TD" name="td" required aria-label="TD you measured">
+  <label class="small">with <select name="method">
+    <option value="td1">a TD-1 meter</option>
+    <option value="seashell">a HueForge test print</option>
+    <option value="other">something else</option>
+  </select></label>
+  <label class="small" title="Also use this value for other spools of the same filament"><input type="checkbox" name="add_to_db" value="true" checked> reuse for this filament</label>
+  <button>{{ button }}</button>
+</form>

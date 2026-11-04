@@ -1,0 +1,72 @@
+name: Bug report
+description: Something in spoolmix doesn't work, crashes, or gives a plan that looks wrong.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! The more of this you can fill in, the faster it gets fixed.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you did, what you expected, and what you got instead. Screenshots help a lot.
+      placeholder: |
+        I planned a 5-color design with 4 slots and …
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to …
+        2. Click …
+        3. See …
+  - type: input
+    id: version
+    attributes:
+      label: spoolmix version
+      description: Shown at the bottom of every page, e.g. "spoolmix 0.2.1".
+    validations:
+      required: true
+  - type: dropdown
+    id: install
+    attributes:
+      label: How do you run it?
+      options:
+        - Docker Compose
+        - Dockge / Portainer / other Docker UI
+        - docker run
+        - Built from source
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: source
+    attributes:
+      label: Where do your filaments live?
+      options:
+        - Spoolman
+        - spoolmix's own filament list
+  - type: input
+    id: printer
+    attributes:
+      label: Printer and slicer (with version)
+      placeholder: Snapmaker U1, Snapmaker Orca 2.4
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      placeholder: Chrome 140, Firefox, Brave, Safari…
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log output
+      description: |
+        Run `docker logs spoolmix --tail 100` (use your container's name) and paste anything that looks like an error.
+      render: text
+  - type: markdown
+    attributes:
+      value: |
+        **Attaching a 3MF?** It helps with planning or build problems. Please only attach models you're allowed to share.

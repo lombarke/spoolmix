@@ -1,0 +1,36 @@
+# Which material categories may be mixed (layer-alternated) in one print.
+#
+# Source: Snapmaker Orca resources/profiles/Snapmaker/filament/filament_compatibility.json
+# https://github.com/Snapmaker/OrcaSlicer/blob/89311782298309040ee28b9a183f33f0f5477b15/resources/profiles/Snapmaker/filament/filament_compatibility.json
+# (retrieved 2026-10-16). Snapmaker Orca refuses to slice incompatible mixes.
+#
+# Each category is compatible with itself and the listed partners (symmetric).
+#
+# Local change (2026-10-16): PETG <-> TPU removed. Snapmaker allows it, but we don't want
+# flexible layers mixed into rigid ones.
+schema_version: 1
+compatibility:
+  PLA: [PC]
+  PETG: [PET, ABS, ASA, PC]
+  TPU: [PET]
+  PET: [PETG, TPU, ABS, ASA, PC]
+  ABS: [PETG, PET, ASA, PC, PA]
+  ASA: [PETG, PET, ABS, PC, PA]
+  PC: [PLA, PETG, PET, ABS, ASA, PA]
+  PA: [ABS, ASA, PC]
+  SUPPORT: []
+
+# Material names (as written in Spoolman / projects) -> category. Matching is case-insensitive;
+# names not listed here are matched by keyword (see spoolmix/materials.py), e.g. "PLA+", "Silk PLA",
+# "PLA Meta" -> PLA. Anything unrecognized is only mixed with the exact same material name.
+aliases:
+  PCTG: PETG
+  PETG-CF: PETG
+  PLA-CF: PLA
+  PA-CF: PA
+  PA6: PA
+  PA12: PA
+  NYLON: PA
+  PVA: SUPPORT
+  BVOH: SUPPORT
+  HIPS: SUPPORT

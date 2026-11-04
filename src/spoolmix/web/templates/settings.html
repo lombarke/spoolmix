@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Settings · spoolmix{% endblock %}
+{% block content %}
+<h1>Settings</h1>
+
+<div class="panel">
+  <h3>Where your filaments live</h3>
+  {% if src and src.from_env %}<p class="muted small">Using <code>SPOOLMAN_URL</code> from the environment. Saving here takes precedence.</p>{% endif %}
+  {% with action="/settings/source", submit="Save" %}{% include "_source_form.html" %}{% endwith %}
+  {% if src and src.kind == 'local' %}
+  <hr>
+  <h3>Copy filaments from Spoolman</h3>
+  <p class="muted small">Moving away from Spoolman? Copy its filaments into your list once (colors, materials, TD values, and whether you have
+    a spool). Filaments already in your list are skipped.</p>
+  <form method="post" action="/settings/import-spoolman" class="row">
+    <input type="text" name="url" value="{{ spoolman_url }}" placeholder="http://spoolman.local:7912" style="flex:1;min-width:220px" required>
+    <button>Copy filaments</button>
+  </form>
+  {% elif local_count %}
+  <p class="muted small">Your filament list in spoolmix ({{ local_count }} filament{{ 's' if local_count != 1 }}) is kept, in case you switch back.</p>
+  {% endif %}
+</div>
+
+<div class="panel" id="templates">
+  <h3>Printer templates</h3>
+  {% if templates %}
+  <p class="muted small" style="margin-top:0">Each design and color match is planned for one template: it sets the filament slots and the
+    printer, process and filament settings of the print-ready project. Keep one per printer, nozzle or process you use (for example
+    0.10 mm and 0.20 mm, or Subdivide Mix Layer on and off). Calibration is kept per template too.</p>
+  {% for t in templates %}
+  <div class="tplcard" id="t-{{ t.id }}">
+    <div class="row" style="justify-content:space-between">
+      <form method="post" action="/templates/{{ t.id }}/rename" class="row" style="gap:6px;flex:1">
+        <input type="text" name="name" value="{{ t.name }}" aria-label="Template name" style="flex:1;min-width:260px;font-weight:600">
+        <button>Rename</button>
+      </form>
+      <div class="row" style="gap:6px">
+        {% if t.default %}<span class="tag user">default</span>
+        {% else %}<form method="post" action="/templates/{{ t.id }}/default"><button>Make default</button></form>{% endif %}
+        {% if t.calibration() %}<span class="tag high">calibrated</span>{% endif %}
+      </div>
+    </div>
+    {% with template=t %}{% include "_template_card.html" %}{% endwith %}
+    <div class="row" style="margin-top:10px">
+      <form method="post" action="/templates/{{ t.id }}/replace" enctype="multipart/form-data" class="row" style="gap:6px">
+        <input type="file" name="file" accept=".3mf" required><button>Replace</button>
+      </form>
+      <span style="flex:1"></span>
+      <form method="post" action="/templates/{{ t.id }}/delete" data-confirm="Delete the template &quot;{{ t.name }}&quot; and its calibration? Plans that used it will need re-planning."
+            onsubmit="return confirm(this.dataset.confirm)"><button class="danger">Delete</button></form>
+    </div>
+  </div>
+  {% endfor %}
+  <details style="margin-top:14px"><summary>Add another template</summary>
+    <div style="margin-top:10px">{% with next="/settings#templates", template=none %}{% include "_template_help.html" %}{% endwith %}</div>
+  </details>
+  {% else %}
+    <p style="margin-top:0">spoolmix copies your printer, print process and filament settings from a small project you save once in
+      your slicer. You need one to download print-ready projects and calibration grids.</p>
+    {% with next="/settings#templates", template=none %}{% include "_template_help.html" %}{% endwith %}
+  {% endif %}
+</div>
+
+<form class="panel" method="post" action="/settings/general">
+  <h3>Planning and shopping</h3>
+  <div class="grid2">
+    <div>
+      <label for="slots">Filament slots on your printer</label><br>
+      <input type="number" name="slots" id="slots" min="1" max="{{ max_slots }}" value="{{ slots }}" style="width:90px">
+      <p class="muted small">How many filaments you can load at once. Plans use this unless you change it for a design.
+        Used only when you have no printer template: with one, the slots come from the template you pick.</p>
+    </div>
+    <div>
+      <label>Suggest filaments to buy from</label>
+      <div class="radio-list" style="margin-top:6px">
+        {% for key, label in scopes.items() %}
+        <label><input type="radio" name="scope" value="{{ key }}" {{ 'checked' if key == scope }}>
+          <span>{{ label }}{% if key == 'all' %}<br><span class="muted small">Widest choice. Filaments you already have are never suggested.</span>
+            {% elif key == 'owned_brands' %}<br><span class="muted small">Handy if you buy from the same few brands.</span>
+            {% else %}<br><span class="muted small">Only the list on the Shopping page.</span>{% endif %}</span></label>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:10px">
+      <label>When the closest color would stripe</label>
+      <div class="radio-list cols3" style="margin-top:6px">
+        {% for key, label, help in [('balanced', 'Balanced', 'A mix has to be clearly closer than a plain filament, and mixes likely to stripe count as off.'),
+                                     ('smooth', 'Smooth blends (fewer stripes)', 'Prefer plain filaments and mixes that blend, even if colors are further off.'),
+                                     ('color', 'Exact colors', 'Get as close to the designer\'s colors as possible, even with mixes that may show stripes.')] %}
+        <label><input type="radio" name="priority" value="{{ key }}" {{ 'checked' if key == priority }}>
+          <span>{{ label }}<br><span class="muted small">{{ help }}</span></span></label>
+        {% endfor %}
+      </div>
+      <p class="muted small">You can also change this for each design or color match. The last choice is remembered.</p>
+    </div>
+  <button class="primary">Save</button>
+</form>
+{% endblock %}
+{% block scripts %}<script>SpoolMix.initSource();</script>{% endblock %}

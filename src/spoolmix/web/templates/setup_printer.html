@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Your printer · spoolmix{% endblock %}
+{% block content %}
+<div class="setup">
+  <p class="muted small" style="margin:0 0 4px">Step 2 of 2</p>
+  <h1>Your printer</h1>
+  <p class="lead">spoolmix builds print-ready projects for you. To get your printer's settings right, it copies them from a
+    small project you save once in your slicer: your <em>printer template</em>. It takes about two minutes.</p>
+  <div class="panel">
+    {% if template %}
+      <h3>Template saved</h3>
+      {% include "_template_card.html" %}
+      <p style="margin:16px 0 0"><a class="button primary" href="{{ next }}">Continue</a></p>
+    {% else %}
+      <h3>Make your printer template</h3>
+      {% with next="/setup/printer?next=" ~ (next|urlencode) %}{% include "_template_help.html" %}{% endwith %}
+    {% endif %}
+  </div>
+  {% if not template %}
+  <p class="small"><a href="{{ next }}">Skip for now</a> <span class="muted">· You can plan prints and match colors without it. You'll
+    need it to download print-ready projects and calibration grids. It's under Settings any time.</span></p>
+  {% endif %}
+</div>
+{% endblock %}

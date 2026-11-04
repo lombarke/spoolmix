@@ -1,0 +1,29 @@
+# secrets / local config
+.env
+.env.*
+!.env.example
+
+# local data (calibration results, photos, imported catalogs)
+data/
+*.local.yaml
+*.local.json
+calibration/photos/
+
+# python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+
+# user-saved Orca projects / generated prints
+*.3mf
+
+# Windows download metadata
+*:Zone.Identifier
+
+# local Docker overrides (e.g. building from source)
+compose.override.yaml

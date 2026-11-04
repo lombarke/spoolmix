@@ -1,0 +1,17 @@
+# spoolmix: https://github.com/lombarke/spoolmix
+#   docker compose up -d     then open http://<this-host>:8790
+services:
+  spoolmix:
+    image: ghcr.io/lombarke/spoolmix:latest
+    container_name: spoolmix
+    restart: unless-stopped
+    ports:
+      - "8790:8790"            # change the left number to use another port
+    environment:
+      # Files in ./data are owned by this user/group (run `id` to see yours).
+      PUID: "1000"
+      PGID: "1000"
+      # Optional: your Spoolman address. Leave it out to choose on the setup page.
+      # SPOOLMAN_URL: "http://spoolman.local:7912"
+    volumes:
+      - ./data:/data           # everything spoolmix saves; back this folder up

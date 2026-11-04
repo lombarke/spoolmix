@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+{% block title %}{{ meta.name }} · spoolmix{% endblock %}
+
+{% macro striped_share(p) %}{{ '%.0f'|format(p.colors|selectattr('recipe.banding', 'equalto', 'high')|sum(attribute='share') * 100) }}{% endmacro %}
+{% macro plain_share(p) %}{{ '%.0f'|format(p.colors|selectattr('recipe.size', 'equalto', 1)|sum(attribute='share') * 100) }}{% endmacro %}
+{% macro why_buy(o, base) %}{% set parts = [] %}
+  {% set p0, p1 = plain_share(base)|int, plain_share(o)|int %}
+  {% if p1 > p0 + 5 %}{% set _ = parts.append('printed in plain filament: ' ~ p0 ~ '% → ' ~ p1 ~ '% of the surface') %}{% endif %}
+  {% set s0, s1 = striped_share(base)|int, striped_share(o)|int %}
+  {% if s1 < s0 %}{% set _ = parts.append('fewer stripes: ' ~ s0 ~ '% → ' ~ s1 ~ '% of the surface') %}{% endif %}
+  {% if o.mixes < base.mixes %}{% set _ = parts.append(base.mixes ~ ' → ' ~ o.mixes ~ ' mix' ~ ('es' if o.mixes != 1 else '')) %}{% endif %}
+  {% if o.weighted < base.weighted - 0.2 %}{% set _ = parts.append('closer colors: ΔE ' ~ ('%.2f'|format(base.weighted)) ~ ' → ' ~ ('%.2f'|format(o.weighted))) %}{% endif %}
+  {% if o.worst < base.worst - 1 %}{% set _ = parts.append('worst color ΔE ' ~ ('%.1f'|format(base.worst)) ~ ' → ' ~ ('%.1f'|format(o.worst))) %}{% endif %}
+  {% if parts %}<p class="small" style="margin:6px 0 8px"><b>Why:</b> {{ parts|join(' · ') }}{% if o.weighted > base.weighted + 0.2 %}. Colors are slightly less exact on average (ΔE {{ base.weighted|de }} → {{ o.weighted|de }}), but more of the print is solid color and fewer areas depend on a mix blending well{% endif %}.</p>{% endif %}
+{% endmacro %}
+{% macro plan_block(p, which, title) %}
+<div class="result" id="plan-{{ which }}">
+  <div class="row" style="justify-content:space-between;align-items:flex-start">
+    <div>
+      <div class="headline">{{ title }}</div>
+      <div><span class="de q-{{ 'good' if p.weighted < 2 else 'ok' if p.weighted < 5 else 'warn' if p.weighted < 10 else 'bad' }}">ΔE {{ p.weighted|de }}</span>
+        <span class="muted small">area-weighted average · worst color ΔE {{ p.worst|de }} · {{ p.mixes }} mix{{ 'es' if p.mixes != 1 }}</span></div>
+      {% set striped = p.colors|selectattr('recipe.banding', 'equalto', 'high')|list %}
+      {% if striped %}<div class="warn" style="display:inline-block">⚠ {{ striped|length }} color{{ 's' if striped|length != 1 }} likely to show visible stripes
+        ({{ '%.0f'|format(striped|sum(attribute='share') * 100) }}% of the surface): your filaments for {{ 'them' if striped|length != 1 else 'it' }} are too different or too opaque to blend.</div>{% endif %}
+      {% if plan_template and plan_template.info.subdivide and p.mixes and (plan_template.info.subdivide_whole or meta.analysis.painted_triangles) %}
+      <div class="warn" style="display:inline-block">⚠ <b>{{ plan_template.name }}</b> has Subdivide Mix Layer on, so the mixes{% if not plan_template.info.subdivide_whole %} in
+        painted areas{% endif %} will print smooth but close to one in-between color whatever their ratio. The colors below may not match.
+        For accurate mixed colors, plan with a template that has it off.</div>
+      {% endif %}
+    </div>
+    <div style="text-align:right">
+      {% if which in outputs %}
+        <a class="button primary" href="/projects/{{ pid }}/download/{{ which }}">Download print-ready project</a>
+      {% elif job and job.kind == 'convert' %}
+        <button disabled>Building…</button>
+      {% else %}
+        <form method="post" action="/projects/{{ pid }}/convert/{{ which }}">
+          <button class="primary" {{ 'disabled' if not has_template or job }}>Build print-ready project</button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+  {% if p.buy %}
+  <div class="shop" style="margin:10px 0">
+    <strong>Buy:</strong>
+    {% for b in p.buy %}<span class="sw" style="background:{{ b.hex }}"></span> {% if b.url %}<a href="{{ b.url }}" target="_blank" rel="noopener">{{ b.label }}</a>{% else %}{{ b.label }}{% endif %}
+      <span class="muted small">(TD {{ b.td if b.td is not none else '?' }}{% if b.bundle %} · {{ b.bundle }}{% endif %}{% if b.price %} · {{ b.price }}{% endif %})</span>{% if not loop.last %} + {% endif %}{% endfor %}
+  </div>
+  {% endif %}
+  <div style="margin:10px 0 4px"><strong>Load these filaments</strong> <span class="muted small">(filament slots 1–{{ p.slots|length }}, in this order)</span></div>
+  <div class="steps">
+    {% for s in p.slots %}<div class="step"><span class="slot">F{{ s.slot }}</span><span class="sw" style="background:{{ s.hex }}"></span>{{ s.label }}{% with label=s.label %}{% include "_texture.html" %}{% endwith %}{% if not s.owned %} <span class="buy">BUY</span>{% endif %}</div>{% endfor %}
+    {% if swap_stock and not p.slots|selectattr('key')|list and not job and which != 'custom' %}<span class="muted small">Re-plan to try other filaments</span>{% endif %}
+  </div>
+  {% if swap_stock and p.slots|selectattr('key')|list and not job %}
+  {% set mats = meta.plans.materials %}
+  <details class="swapdetails" id="swapbox-{{ which }}"><summary>Try other filaments</summary>
+  <form method="post" action="/projects/{{ pid }}/custom" class="swapform" id="swap-{{ which }}">
+    <input type="hidden" name="which" value="{{ which }}">
+    <p class="small" style="margin:0 0 8px">Pick the filament for each slot. spoolmix keeps your picks, finds the best order and works out
+      how to print each color with them, then shows the result next to this plan.</p>
+    <div class="swapgrid">
+      {% for i in range(1, (meta.plans.opts.slots or p.slots|length) + 1) %}{% set cur = p.slots[i - 1] if i <= p.slots|length else none %}
+      <label><span class="slot">F{{ i }}</span>
+        <select name="f{{ i }}">
+          <option value="" {{ 'selected' if not cur }}>— leave empty —</option>
+          {% for s in p.slots if not s.owned and s.key %}<option value="{{ s.key }}" {{ 'selected' if cur and cur.key == s.key }}>{{ s.label }} (to buy)</option>{% endfor %}
+          {% for f in swap_stock if f.category in mats %}<option value="{{ f.key }}" data-hex="{{ f.hex }}" {{ 'selected' if cur and cur.key == f.key }}>{{ f.label }}</option>{% endfor %}
+        </select></label>
+      {% endfor %}
+    </div>
+    <div class="row" style="margin-top:10px"><button class="primary">Show this version</button>
+      <button type="button" class="link" onclick="this.closest('details').open = false">Cancel</button></div>
+  </form>
+  </details>
+  {% endif %}
+  <div class="scroll">
+  <table>
+    <tr><th>Design</th><th>You get</th><th>ΔE</th><th>How</th></tr>
+    {% for c in p.colors %}{% set r = c.recipe %}
+    <tr>
+      <td><span class="sw mid" style="background:{{ c.hex }}"></span> <span class="hex">{{ c.hex }}</span>
+        <div class="muted small">filament {{ c.id }} · {{ '%.1f'|format(c.share * 100) }}% of surface{% if c.important %} · <b>important</b>{% endif %}</div></td>
+      <td><span class="sw mid" style="background:{{ r.predicted }}"></span> <span class="hex">{{ r.predicted }}</span></td>
+      <td><span class="q-{{ r.quality[1] }}"><b>{{ r.delta_e|de }}</b></span><div class="muted small">{{ r.quality[0] }}</div>{% if r.banding %}<span class="band band-{{ r.banding }}">{{ {'low': 'blends well', 'moderate': 'may band slightly', 'high': 'likely visible stripes'}[r.banding] }}</span>{% endif %}</td>
+      <td class="small">
+        {% if r.size == 1 %}F{{ r.parts[0].slot }} {{ r.parts[0].label }} as-is
+        {% else %}<b>Mix → filament {{ c.new_id }}</b>: {{ r.ratio_text }}
+          <div class="muted">{% for pt in r.parts %}F{{ pt.slot }} {{ pt.label }}{% if not loop.last %}, {% endif %}{% endfor %}</div>{% endif %}
+        {% for w in r.warnings %}<div class="warn">⚠ {{ w }}</div>{% endfor %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+</div>
+{% endmacro %}
+
+{% block content %}
+<p><a href="/">← Designs</a></p>
+<div class="row" style="justify-content:space-between">
+  <h1 style="margin:0">{{ meta.name }}</h1>
+  <form method="post" action="/projects/{{ pid }}/delete" onsubmit="return confirm('Delete this design?')"><button>Delete</button></form>
+</div>
+
+{% if job %}
+<div class="panel" id="jobpanel" data-job="{{ job.id }}">
+  <div class="spinner on" style="padding:4px 0"><b>{{ {'analyze': 'Analyzing', 'plan': 'Planning', 'convert': 'Building project', 'custom': 'Trying your filaments'}[job.kind] }}…</b>
+    <span id="jobmsg">{{ job.message }}</span></div>
+</div>
+{% endif %}
+
+{% if meta.analysis %}{% set a = meta.analysis %}
+<form class="panel" method="post" action="/projects/{{ pid }}/plan">
+  <h3>Designer's colors</h3>
+  <p class="muted small">{{ a.objects }} object{{ 's' if a.objects != 1 }} on {{ a.plates }} plate{{ 's' if a.plates != 1 }}
+    {% if a.painted_triangles %}· {{ '{:,}'.format(a.painted_triangles) }} painted triangles{% endif %}.
+    Tick colors that matter more than their size suggests (eyes, logos, text).</p>
+  <div class="steps">
+    {% for f in a.filaments %}
+    <label class="step" style="color:var(--ink);{{ 'opacity:.45' if f.area == 0 }}">
+      <input type="checkbox" name="important" value="{{ f.id }}" {{ 'checked' if f.id in meta.important }} {{ 'disabled' if f.area == 0 }}>
+      <span class="sw mid" style="background:{{ f.hex }}"></span>
+      <span><span class="hex">{{ f.hex }}</span><br><span class="muted small">{{ '%.1f'|format(f.share * 100) }}%{% if f.area == 0 %} (unused){% endif %}</span></span>
+    </label>
+    {% endfor %}
+  </div>
+  {% for w in a.warnings %}<div class="warn">⚠ {{ w }}</div>{% endfor %}
+  <details style="margin-top:8px"><summary>Options</summary>
+    <div class="row" style="margin-top:8px">
+      <label>Prediction <select name="model">
+        <option value="orca">Slicer preview</option>
+        <option value="calibrated" {{ 'selected' if meta.plans and meta.plans.opts.model == 'calibrated' }}>Calibrated to my prints{% if not (chosen and calibrated.get(chosen.id)) %} (this template isn't calibrated yet){% endif %}</option></select></label>
+      <label>Max per filament <input type="number" name="max_pct" value="{{ meta.plans.opts.max_pct if meta.plans else 70 }}" min="50" max="100" style="width:64px">%</label>
+    </div>
+  </details>
+  {% set cur_slots = meta.plans.opts.slots if meta.plans and meta.plans.opts.slots else default_slots %}
+  {% if suggest_material %}
+  <div class="panel callout small" style="margin:12px 0 0">This design calls for <b>{{ design_categories|join(' / ') }}</b>, but
+    your printer template <b>{{ chosen.name }}</b> is set up for <b>{{ suggest_material }}</b>, and you have
+    {{ stock_materials.get(suggest_material, 0) }} {{ suggest_material }} filaments against
+    {{ designed_count }} {{ design_categories|join(' / ') }}.
+    Most designs print fine in another material; only the colors come from the design.
+    <button type="button" class="primary" style="margin-left:6px" onclick="SpoolMix.printIn('{{ suggest_material }}')">Print it in {{ suggest_material }}</button>
+  </div>
+  {% endif %}
+  <div class="row" style="margin-top:12px">
+    {% if stock_materials %}
+    <label style="font-size:15px;color:var(--ink)" title="The design's material, or another one you have filament in">Print in
+      <select name="material" id="printmat">
+        <option value="" {{ 'selected' if not print_material }}>{{ design_categories|join(' / ') or 'as designed' }} (as designed)</option>
+        {% for m, n in stock_materials.items() %}{% if m not in design_categories %}
+        <option value="{{ m }}" {{ 'selected' if print_material == m }}>{{ m }} ({{ n }} filament{{ 's' if n != 1 }})</option>{% endif %}{% endfor %}
+      </select></label>
+    {% endif %}
+    {% if templates %}{% include "_print_with.html" %}
+    {% else %}
+    <label style="font-size:15px;color:var(--ink)" title="How many different filaments your printer can use in one print (toolheads or feeder slots)">
+      Filament slots <input type="number" name="slots" value="{{ cur_slots }}" min="1" max="16" style="width:68px"></label>
+    {% endif %}
+    <label style="font-size:15px;color:var(--ink)"><input type="checkbox" name="shop" value="true" {{ 'checked' if not meta.plans or meta.plans.opts.shop }}> Suggest spools to buy</label>
+    <select name="max_buy"><option value="2">up to 2 spools</option><option value="1" {{ 'selected' if meta.plans and meta.plans.opts.max_buy == 1 }}>1 spool only</option></select>
+    {% with priority = (meta.plans.opts.priority if meta.plans and meta.plans.opts.priority else default_priority) %}{% include "_priority.html" %}{% endwith %}
+    <span style="flex:1"></span>
+    <button class="primary big" {{ 'disabled' if job }}>{{ 'Re-plan' if meta.plans else 'Plan with my filaments' }}</button>
+  </div>
+  {% if not has_template %}
+  <p class="muted small" style="margin:10px 0 0">No printer template yet, so this plans for the {{ cur_slots }} filament slots you set
+    above. You'll need a template to download a print-ready project: <a href="/settings#templates">set one up</a> (about two minutes).</p>
+  {% else %}
+  <p class="warn" id="tplmismatch" hidden style="margin:10px 0 0" data-designed="{{ design_categories|join('/') }}">⚠ This template's
+    filament presets are <b class="mm-types"></b>, but you're printing in <b class="mm-mat"></b>. The print-ready project would use the
+    template's temperatures and settings, so print in <b class="mm-types"></b> instead, pick a template set up for <b class="mm-mat"></b>,
+    or add one under <a href="/settings#templates">Settings</a>.</p>
+  {% endif %}
+</form>
+{% endif %}
+
+{% if meta.plans %}{% set pl = meta.plans %}
+  {% if not has_template %}<div class="panel callout small"><b>One more step to download this as a print-ready project:</b> add your
+    printer template, a small project you save once in your slicer so spoolmix knows your printer, print process and filament settings.
+    <a class="button primary" href="/settings#templates" style="margin-left:6px">Set up printer template</a></div>
+  {% elif not plan_template %}<p class="flash err">{% if pl.opts.template %}The printer template this plan used was deleted.{% else %}This plan was
+    made before you had a printer template.{% endif %} Pick one under "Print with" and re-plan to build a print-ready project.</p>
+  {% else %}<p class="muted small">Planned for <b>{{ plan_template.name }}</b> ({{ plan_template.slots }} filament slots).</p>{% endif %}
+  {% if pl.designed_materials and pl.materials != pl.designed_materials %}
+  <p class="muted small">Material: this design calls for {{ pl.designed_materials|join(' / ') }}; you chose to print it in
+    {{ pl.materials|join(' / ') }}, so only {{ pl.materials|join(' / ') }} filaments are used. Mixes only combine materials that bond with each other.</p>
+  {% else %}
+  <p class="muted small">Material: this design is {{ pl.materials|join(' / ') or 'unknown material' }}, so only
+    {{ pl.materials|join(' / ') or 'any' }} filaments are used{% if pl.excluded_count %}
+    ({{ pl.excluded_count }} in-stock filament{{ 's' if pl.excluded_count != 1 }} of {{ pl.excluded|join(', ') }} left out){% endif %}.
+    Mixes only combine materials that bond with each other.</p>
+  {% endif %}
+  {{ plan_block(pl.base, 'base', 'With the filaments you have') }}
+  {% if pl.custom %}{% set src = pl.base if pl.custom.from == 'base' else (pl.options[pl.custom.from[3:]|int] if pl.custom.from[3:]|int < pl.options|length else pl.base) %}
+    <h2 style="display:flex;justify-content:space-between;align-items:center">Your version
+      <form method="post" action="/projects/{{ pid }}/custom/discard"><button class="link">Discard</button></form></h2>
+    <p class="small" style="margin:6px 0 8px"><b>Compared with {{ 'the plan with your filaments' if pl.custom.from == 'base' else 'option ' ~ (pl.custom.from[3:]|int + 1) }}:</b>
+      ΔE {{ src.weighted|de }} → {{ pl.custom.weighted|de }} ({{ 'better' if pl.custom.weighted < src.weighted - 0.05 else 'worse' if pl.custom.weighted > src.weighted + 0.05 else 'about the same' }})
+      · worst color ΔE {{ '%.1f'|format(src.worst) }} → {{ '%.1f'|format(pl.custom.worst) }}
+      · likely stripes on {{ striped_share(src) }}% → {{ striped_share(pl.custom) }}% of the surface
+      · {{ src.mixes }} → {{ pl.custom.mixes }} mix{{ 'es' if pl.custom.mixes != 1 }}.</p>
+    {{ plan_block(pl.custom, 'custom', 'Your filaments') }}
+  {% endif %}
+  {% if pl.options %}
+    <h2>Spools worth buying</h2>
+    {% for o in pl.options %}
+      {% if o.simplest %}
+        {% set t = ('Simplest: buy ' ~ (o.buy|map(attribute='label')|join(' + ')) ~ ' and skip color mixing') if o.buy else 'Simplest: skip color mixing' %}
+        <p class="small" style="margin:6px 0 8px">Every color printed with one plain filament: no mixing, no striping, nothing to tune.
+          {% set off = o.colors|rejectattr('recipe.delta_e', 'lt', 3)|list %}{% if off %}Not exact: {% for c in off %}{{ c.hex }} → {{ c.recipe.parts[0].label }} (ΔE {{ c.recipe.delta_e|de }}, {{ '%.0f'|format(c.share * 100) }}% of surface){% if not loop.last %}; {% endif %}{% endfor %}.{% endif %}</p>
+      {% else %}{% set t = 'Option ' ~ loop.index ~ ': buy ' ~ (o.buy|map(attribute='label')|join(' + ')) %}{{ why_buy(o, pl.base) }}{% endif %}
+      {{ plan_block(o, 'opt' ~ loop.index0, t) }}
+    {% endfor %}
+  {% elif pl.opts.shop %}
+    <div class="panel small"><b>No purchase would noticeably improve this.</b> With {{ pl.opts.slots or 4 }} filament slots, your
+      filaments already cover these colors about as well as {{ pl.opts.slots or 4 }} can: a new spool would have to replace one that another color needs.
+      {% if pl.base.worst > 5 %}To get the weakest color closer, tick it as <b>important</b> and re-plan.{% endif %}</div>
+  {% endif %}
+  <div class="panel small">
+    <b>Printing the downloaded project:</b> open it in your slicer and load the listed filaments as F1–F{{ pl.opts.slots or 4 }}.
+    Mixes are already set up as filaments {{ (pl.opts.slots or 4) + 1 }}+ and applied to the painted areas and parts.
+    The printer and process come from your template project (e.g. a color-mixing process). Settings the designer
+    changed (supports, brim, infill, walls…) are carried over; layer height and line widths stay as Color Mixing needs them.
+  </div>
+{% endif %}
+{% endblock %}
+{% block scripts %}<script>SpoolMix.pollJob(); SpoolMix.initPrintWith();</script>{% endblock %}
