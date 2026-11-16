@@ -1,5 +1,10 @@
 FROM python:3.12-slim
 
+# Pull in Debian security fixes the base image hasn't caught up with yet (Trivy flags them otherwise).
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=ghcr.io/astral-sh/uv:0.13.1 /uv /usr/local/bin/uv
 
 ENV UV_COMPILE_BYTECODE=1 \
